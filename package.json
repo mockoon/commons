@@ -1,0 +1,37 @@
+{
+  "name": "@mockoon/commons",
+  "description": "Mockoon's commons library. Used in Mockoon desktop application and CLI.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Guillaume Monnet",
+    "email": "hi@255kb.dev",
+    "url": "https://255kb.dev/"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/typings/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 2,
+    "printWidth": 80,
+    "trailingComma": "none"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mockoon/commons.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mockoon/commons/issues"
+  },
+  "homepage": "https://github.com/mockoon/commons#readme",
+  "devDependencies": {
+    "typescript": "3.5.3"
+  }
+}
