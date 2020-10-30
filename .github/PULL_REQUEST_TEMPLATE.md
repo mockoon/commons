@@ -15,9 +15,3 @@ Closes #[insert_issue_number_here]
 **Technical implementation details**
 
 <!-- Describe your implementation in details -->
-
-**Checklist**
-
-- [ ] automated tests added
-- [ ] data migration added (if applicable)
-- [ ] data migration automated tests added (if applicable)
