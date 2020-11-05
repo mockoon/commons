@@ -71,12 +71,9 @@ export const TestHeaderValidity = (headerName: string) => {
  *
  * @param obj
  */
-export const IsEmpty = (obj) => {
-  return (
-    [Object, Array].includes((obj || {}).constructor) &&
-    !Object.entries(obj || {}).length
-  );
-};
+export const IsEmpty = (obj) =>
+  [Object, Array].includes((obj || {}).constructor) &&
+  !Object.entries(obj || {}).length;
 
 /**
  * Return a Set of the duplicated route UUIDs in an environment

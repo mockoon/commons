@@ -7,7 +7,6 @@ import { FakerAvailableLocales } from '../models/faker.model';
  * @param locale
  */
 export const SetFakerLocale = (locale: FakerAvailableLocales) => {
-  //@ts-ignore
   faker.locale = locale;
 };
 
@@ -17,6 +16,5 @@ export const SetFakerLocale = (locale: FakerAvailableLocales) => {
  * @param seed
  */
 export const SetFakerSeed = (seed: number) => {
-  //@ts-ignore
   faker.seed(seed);
 };

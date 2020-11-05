@@ -7,7 +7,7 @@
 
 `@mockoon/commons` is a library used by Mockoon [main application](https://github.com/mockoon/mockoon) and [Mockoon's CLI](https://github.com/mockoon/cli).
 
-Dependence between the three projects is highly probable. 
+Dependence between the three projects is highly probable, and having to contribute solely to this repository may be rare. 
 
 Therefore, contributions to this repository should always stem from a parent's issue opened in the main application's or the CLI's repositories. 
 
@@ -22,7 +22,7 @@ The following rules apply to all contributions:
 
 ## Work on your feature or bugfix
 
-- Start your `feature` or `fix` from `master`
+- Start your `feature` or `fix` from `main`
 - Preferably squash your commits, except when it makes sense to keep them separate (one refactoring + feature development)
 - Do not forget to add "Closes #xx" in one of the commit messages or in the pull request description (where xx is the GitHub issue number)
 
@@ -32,5 +32,5 @@ Branches naming convention:
 
 ## Open a pull request
 
-Open a pull request to be merge in the `master` branch. All branches should start from `master` and must be merged into `master`.
+Open a pull request to be merge in the `main` branch. All branches should start from `main` and must be merged into `main`.
 Ask maintainers to review the code and be prepared to rework your code if it does not match the style or do not follow the way it's usually done (typing, reducer, etc).

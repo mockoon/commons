@@ -202,7 +202,7 @@ export const OldTemplatingHelpers = {
     return faker.internet.ipv6();
   },
   lorem: function (...args: any[]) {
-    let count: number | undefined = undefined;
+    let count: number | undefined;
 
     if (args.length >= 2 && typeof args[0] === 'number') {
       count = args[0];

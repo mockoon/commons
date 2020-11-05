@@ -290,9 +290,10 @@ export class MockoonServer extends (EventEmitter as new () => TypedEmitter<
               if (!currentRoute) {
                 this.sendError(
                   response,
-                  Texts.EN.BODY_MESSAGES.ROUTE_NO_LONGER_EXISTS,
+                  Texts.EN.MESSAGES.ROUTE_NO_LONGER_EXISTS,
                   404
                 );
+
                 return;
               }
 
@@ -378,7 +379,7 @@ export class MockoonServer extends (EventEmitter as new () => TypedEmitter<
 
                         this.sendError(
                           response,
-                          `${Texts.EN.BODY_MESSAGES.ROUTE_FILE_SERVING_ERROR}${error.message}`
+                          `${Texts.EN.MESSAGES.ROUTE_FILE_SERVING_ERROR}${error.message}`
                         );
                       }
                     });
@@ -406,7 +407,7 @@ export class MockoonServer extends (EventEmitter as new () => TypedEmitter<
 
                   this.sendError(
                     response,
-                    `${Texts.EN.BODY_MESSAGES.ROUTE_SERVING_ERROR}${error.message}`
+                    `${Texts.EN.MESSAGES.ROUTE_SERVING_ERROR}${error.message}`
                   );
                 }
               }, enabledRouteResponse.latency);
@@ -521,7 +522,7 @@ export class MockoonServer extends (EventEmitter as new () => TypedEmitter<
             this.emit('error', ServerErrorCodes.PROXY_ERROR, error);
             this.sendError(
               response,
-              `${Texts.EN.BODY_MESSAGES.PROXY_ERROR}${this.environment.proxyHost}${request.url}: ${error}`,
+              `${Texts.EN.MESSAGES.PROXY_ERROR}${this.environment.proxyHost}${request.url}: ${error}`,
               504
             );
           }
@@ -563,7 +564,7 @@ export class MockoonServer extends (EventEmitter as new () => TypedEmitter<
         try {
           parsedHeaderValue = TemplateParser(header.value, source);
         } catch (error) {
-          const errorMessage = `-- Parsing error. Check logs for more information --`;
+          const errorMessage = Texts.EN.MESSAGES.HEADER_PARSING_ERROR;
           parsedHeaderValue = errorMessage;
         }
 
