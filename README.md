@@ -14,7 +14,7 @@
   <h1>@Mockoon/commons</h1>
 </div>
 
-This is Mockoon's commons library repository. The Commons library regroup Mockoon's common code and is used in the [main application](https://github.com/mockoon/mockoon) and the CLI.
+This is Mockoon's commons library repository. The Commons library regroup Mockoon's common code and is used in the [main application](https://github.com/mockoon/mockoon) and the [CLI](https://github.com/mockoon/cli).
 
 ---
 
@@ -22,21 +22,19 @@ This is Mockoon's commons library repository. The Commons library regroup Mockoo
 
 You can discuss all things related to Mockoon, and ask for help, on the [Spectrum community](https://spectrum.chat/mockoon). It's also a good place to discuss bugs and feature requests before opening an issue on this repository.
 
-If community support is not enough and you still want to open an issue for a bug or a new feature, please follow these simple guidelines:
+## Contributing
 
-- search the [opened](https://github.com/mockoon/mockoon/issues) and [closed](https://github.com/mockoon/mockoon/issues?q=is%3Aissue+is%3Aclosed) issues before opening any issue
+If you are interested in contributing to Mockoon, please take a look at the main [contributing guidelines](https://github.com/mockoon/mockoon/blob/master/CONTRIBUTING.md) and the [ones specific to this repository](https://github.com/mockoon/commons/blob/main/CONTRIBUTING.md).
+
+Please also take a look at our [Code of Conduct](https://github.com/mockoon/commons/blob/main/CODE_OF_CONDUCT.md), and follow these simple guidelines:
+
+- search the opened and closed issues before opening any issue
 - try to give detailed instructions in order to reproduce the bug (providing the mock data you used could be useful)
 - the purpose of Mockoon is to be simple, fast and easy to use; so keep in mind that some features **may not be implemented**!
 
 ## Documentation
 
-You will find the [documentation](https://mockoon.com/docs/latest) on the official website. It covers Mockoon's most complex features. Feel free to contribute or ask for new topics to be covered.
-
-## Contributing
-
-If you are interested in contributing to Mockoon, please take a look at the main [contributing guidelines](https://github.com/mockoon/mockoon/blob/master/CONTRIBUTING.md) and the [ones specific to this repository](https://github.com/mockoon/mockoon/blob/master/CONTRIBUTING.md).
-
-Please also take a look at our [Code of Conduct](https://github.com/mockoon/commons/blob/master/CODE_OF_CONDUCT.md).
+You will find Mockoon's [documentation](https://mockoon.com/docs/latest) on the official website. It covers Mockoon's most complex features. Feel free to contribute or ask for new topics to be covered.
 
 ## Roadmap
 
