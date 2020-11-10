@@ -8,8 +8,6 @@
   <a href="http://eepurl.com/dskB2X"><img src="https://img.shields.io/badge/Newsletter-Subscribe-green.svg?style=flat-square"/></a>
   <a href="https://twitter.com/GetMockoon"><img src="https://img.shields.io/badge/Twitter_@GetMockoon-follow-blue.svg?style=flat-square&colorB=1da1f2"/></a>
   <br>
-  <a href="https://spectrum.chat/mockoon"><img src="https://withspectrum.github.io/badge/badge.svg"/></a>
-  <br>
   <br>
   <h1>@Mockoon/commons</h1>
 </div>
@@ -20,7 +18,7 @@ This is Mockoon's commons library repository. The Commons library regroup Mockoo
 
 ## Support/feedback
 
-You can discuss all things related to Mockoon, and ask for help, on the [Spectrum community](https://spectrum.chat/mockoon). It's also a good place to discuss bugs and feature requests before opening an issue on this repository.
+You can discuss all things related to Mockoon, and ask for help, on the [official community](https://github.com/mockoon/mockoon/discussions). It's also a good place to discuss bugs and feature requests before opening an issue on this repository.
 
 ## Contributing
 
