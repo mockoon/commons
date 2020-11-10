@@ -7,9 +7,9 @@
 
 `@mockoon/commons` is a library used by Mockoon [main application](https://github.com/mockoon/mockoon) and [Mockoon's CLI](https://github.com/mockoon/cli).
 
-Dependence between the three projects is highly probable, and having to contribute solely to this repository may be rare. 
+Dependence between the three projects is highly probable, and having to contribute solely to this repository may be possible but rare. 
 
-Therefore, contributions to this repository should always stem from a parent's issue opened in the main application's or the CLI's repositories. 
+Therefore, contributions to this repository should always stem from a parent's issue (bug or feature) opened in the main application's or the CLI's repositories. 
 
 ## Contribution rules
 
