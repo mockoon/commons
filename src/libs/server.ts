@@ -33,6 +33,7 @@ import { MockoonServerOptions } from '../models/server.model';
 import { ResponseRulesInterpreter } from './response-rules-interpreter';
 import { TemplateParser } from './template-parser';
 import {
+  CreateTransaction,
   GetContentType,
   GetRouteResponseContentType,
   IsValidURL,
@@ -234,7 +235,7 @@ export class MockoonServer extends (EventEmitter as new () => TypedEmitter<
     next: NextFunction
   ) => {
     response.on('close', () => {
-      this.emit('response-close', response);
+      this.emit('transaction-complete', CreateTransaction(request, response));
     });
 
     next();

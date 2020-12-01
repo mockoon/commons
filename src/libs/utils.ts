@@ -1,5 +1,9 @@
+import { Request, Response } from 'express';
+import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
+import { parse as urlParse } from 'url';
 import { Environment } from '../models/environment.model';
 import { Header, Route, RouteResponse } from '../models/route.model';
+import { Transaction } from '../models/server.model';
 
 /**
  * Extract the content-type from an array of headers
@@ -99,3 +103,82 @@ export const ListDuplicatedRouteUUIDs = (
 
   return duplicates;
 };
+
+/**
+ * Sort by ascending order
+ *
+ * @param a
+ * @param b
+ */
+export const AscSort = (a, b) => {
+  if (a.key < b.key) {
+    return -1;
+  } else {
+    return 1;
+  }
+};
+
+/**
+ * Transform http headers objects to Mockoon's Header key value object
+ *
+ * @param object
+ */
+export const TransformHeaders = (
+  headers: IncomingHttpHeaders | OutgoingHttpHeaders
+): Header[] =>
+  Object.keys(headers).reduce<Header[]>((newHeaders, key) => {
+    const headerValue = headers[key];
+    let value = '';
+
+    if (headerValue !== undefined) {
+      if (Array.isArray(headerValue)) {
+        value = headerValue.join(',');
+      } else {
+        value = headerValue.toString();
+      }
+    }
+
+    newHeaders.push({ key, value });
+
+    return newHeaders;
+  }, []);
+
+/**
+ * Create a Transaction object from express req/res.
+ * To be used after the response closes
+ *
+ * @param request
+ * @param response
+ */
+export const CreateTransaction = (
+  request: Request,
+  response: Response
+): Transaction => ({
+  request: {
+    method: request.method,
+    urlPath: urlParse(request.originalUrl).pathname,
+    route: request.route ? request.route.path : null,
+    params: request.params
+      ? Object.keys(request.params).map((paramName) => ({
+          name: paramName,
+          value: request.params[paramName]
+        }))
+      : [],
+    queryParams: request.query
+      ? Object.keys(request.query).map((queryParamName) => ({
+          name: queryParamName,
+          value: request.query[queryParamName] as string
+        }))
+      : [],
+    body: request.body,
+    headers: TransformHeaders(request.headers).sort(AscSort)
+  },
+  response: {
+    statusCode: response.statusCode,
+    headers: TransformHeaders(response.getHeaders()).sort(AscSort),
+    body: response.body
+  },
+  routeResponseUUID: response.routeResponseUUID,
+  routeUUID: response.routeUUID,
+  proxied: request.proxied || false
+});
