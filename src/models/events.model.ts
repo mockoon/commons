@@ -1,5 +1,5 @@
-import { MockoonResponse } from './server.model';
 import { ServerErrorCodes } from '../enums/errors.enum';
+import { Transaction } from './server.model';
 
 export interface ServerEvents {
   error: (errorCode: ServerErrorCodes, originalError?: Error) => void;
@@ -7,5 +7,5 @@ export interface ServerEvents {
   'creating-proxy': () => void;
   started: () => void;
   'entering-request': () => void;
-  'response-close': (response: MockoonResponse) => void;
+  'transaction-complete': (transaction: Transaction) => void;
 }
