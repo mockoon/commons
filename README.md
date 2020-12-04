@@ -24,11 +24,7 @@ You can discuss all things related to Mockoon, and ask for help, on the [officia
 
 If you are interested in contributing to Mockoon, please take a look at the main [contributing guidelines](https://github.com/mockoon/mockoon/blob/master/CONTRIBUTING.md) and the [ones specific to this repository](https://github.com/mockoon/commons/blob/main/CONTRIBUTING.md).
 
-Please also take a look at our [Code of Conduct](https://github.com/mockoon/commons/blob/main/CODE_OF_CONDUCT.md), and follow these simple guidelines:
-
-- search the opened and closed issues before opening any issue
-- try to give detailed instructions in order to reproduce the bug (providing the mock data you used could be useful)
-- the purpose of Mockoon is to be simple, fast and easy to use; so keep in mind that some features **may not be implemented**!
+Please also take a look at our [Code of Conduct](https://github.com/mockoon/commons/blob/main/CODE_OF_CONDUCT.md).
 
 ## Documentation
 
@@ -36,6 +32,6 @@ You will find Mockoon's [documentation](https://mockoon.com/docs/latest) on the 
 
 ## Roadmap
 
-If you want to know what will be coming in the next release you can check the [project "Roadmap"](https://github.com/orgs/mockoon/projects/2).
+If you want to know what will be coming in the next release you can check the global [Roadmap](https://github.com/orgs/mockoon/projects/2).
 
 New releases will be announced on Mockoon's [Twitter account @GetMockoon](https://twitter.com/GetMockoon) and through the newsletter to which you can subscribe [here](http://eepurl.com/dskB2X).
