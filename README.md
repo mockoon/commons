@@ -12,13 +12,13 @@
   <h1>@Mockoon/commons</h1>
 </div>
 
-This is Mockoon's commons library repository. The Commons library regroup Mockoon's common code and is used in the [main application](https://github.com/mockoon/mockoon) and the [CLI](https://github.com/mockoon/cli).
+Mockoon's Commons library regroups Mockoon's shared code used in the  [main application](https://github.com/mockoon/mockoon) and the [CLI](https://github.com/mockoon/cli).
 
 ---
 
 ## Support/feedback
 
-You can discuss all things related to Mockoon, and ask for help, on the [official community](https://github.com/mockoon/mockoon/discussions). It's also a good place to discuss bugs and feature requests before opening an issue on this repository.
+You can discuss all things related to Mockoon, and ask for help, on the [main application community](https://github.com/mockoon/mockoon/discussions) or the [CLI community](https://github.com/mockoon/cli/discussions). It's also a good place to discuss bugs and feature requests before opening an issue on this repository.
 
 ## Contributing
 
