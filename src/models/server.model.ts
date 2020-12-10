@@ -11,6 +11,17 @@ export interface MockoonServerOptions {
    * List of duplicated routes UUIDs in the environment
    */
   duplicatedRouteUUIDs?: Set<string>;
+
+  /**
+   * Allow passing a custom log provider
+   */
+  logProvider?: () => {
+    log: (...args: any[]) => void;
+    debug?: (...args: any[]) => void;
+    info?: (...args: any[]) => void;
+    warn?: (...args: any[]) => void;
+    error?: (...args: any[]) => void;
+  };
 }
 
 /**

@@ -49,17 +49,12 @@ export class MockoonServer extends (EventEmitter as new () => TypedEmitter<
   ServerEvents
 >) {
   private serverInstance: httpServer | httpsServer;
-  private duplicatedRouteUUIDs: Set<string>;
 
   constructor(
     private environment: Environment,
     private options: MockoonServerOptions = {}
   ) {
     super();
-
-    if (options.duplicatedRouteUUIDs) {
-      this.duplicatedRouteUUIDs = options.duplicatedRouteUUIDs;
-    }
   }
   /**
    * Start a server
@@ -268,8 +263,8 @@ export class MockoonServer extends (EventEmitter as new () => TypedEmitter<
     this.environment.routes.forEach((declaredRoute: Route) => {
       // only launch non duplicated routes, or ignore if none.
       if (
-        (!this.duplicatedRouteUUIDs ||
-          !this.duplicatedRouteUUIDs.has(declaredRoute.uuid)) &&
+        (!this.options.duplicatedRouteUUIDs ||
+          !this.options.duplicatedRouteUUIDs.has(declaredRoute.uuid)) &&
         declaredRoute.enabled
       ) {
         try {
@@ -472,6 +467,7 @@ export class MockoonServer extends (EventEmitter as new () => TypedEmitter<
           target: this.environment.proxyHost,
           secure: false,
           changeOrigin: true,
+          logProvider: this.options.logProvider,
           ssl: { ...DefaultSSLConfig, agent: false },
           onProxyReq: (
             proxyReq: ClientRequest,
