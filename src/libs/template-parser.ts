@@ -274,6 +274,13 @@ const TemplateParserHelpers = function (request: Request) {
 
       return new ObjectId(defaultValue).toHexString();
     },
+    // concat multiple string and/or variables (like @index)
+    concat: function (...args: any[]) {
+      // remove handlebars options
+      const toConcat = args.slice(0, args.length - 1);
+
+      return toConcat.join('');
+    },
     // Handlebars hook when a helper is missing
     helperMissing: function () {
       return '';
