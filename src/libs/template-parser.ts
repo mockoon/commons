@@ -281,6 +281,26 @@ const TemplateParserHelpers = function (request: Request) {
 
       return toConcat.join('');
     },
+    // set a variable to be used in the template
+    setVar: function (
+      name: string,
+      value: string | number | SafeString | HelperOptions,
+      options: HelperOptions
+    ) {
+      if (typeof name === 'object') {
+        return;
+      }
+
+      // return if no value provided
+      if (
+        (typeof value === 'object' && !(value instanceof SafeString)) ||
+        !value
+      ) {
+        return;
+      }
+
+      options.data.root[name] = value;
+    },
     // Handlebars hook when a helper is missing
     helperMissing: function () {
       return '';
@@ -299,9 +319,12 @@ export const TemplateParser = function (
   request: Request
 ): string {
   try {
-    return hbsCompile(content)(null, {
-      helpers: TemplateParserHelpers(request)
-    });
+    return hbsCompile(content)(
+      {},
+      {
+        helpers: TemplateParserHelpers(request)
+      }
+    );
   } catch (error) {
     throw error;
   }
