@@ -21,12 +21,7 @@ export type ResponseRule = {
   isRegex: boolean;
 };
 
-export type ResponseRuleTargets =
-  | 'body'
-  | 'body_plain'
-  | 'query'
-  | 'header'
-  | 'params';
+export type ResponseRuleTargets = 'body' | 'query' | 'header' | 'params';
 
 export type Route = {
   uuid: string;
