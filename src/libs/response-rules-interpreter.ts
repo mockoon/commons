@@ -13,7 +13,9 @@ import {
  * Get the first route response for which at least one rule is fulfilled.
  */
 export class ResponseRulesInterpreter {
-  private targets: { [key in Exclude<ResponseRuleTargets, 'header'>]: any };
+  private targets: {
+    [key in Exclude<ResponseRuleTargets, 'header' | 'body_plain'>]: any;
+  };
 
   constructor(
     private routeResponses: RouteResponse[],
