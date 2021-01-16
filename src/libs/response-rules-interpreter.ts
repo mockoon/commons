@@ -55,7 +55,7 @@ export class ResponseRulesInterpreter {
    * Check if a rule is valid by comparing the value extracted from the target to the rule value
    */
   private isValidRule = (rule: ResponseRule): boolean => {
-    if (!rule.modifier || !rule.target) {
+    if (!rule.target) {
       return false;
     }
 
