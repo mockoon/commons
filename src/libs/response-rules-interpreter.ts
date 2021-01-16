@@ -14,7 +14,7 @@ import {
  */
 export class ResponseRulesInterpreter {
   private targets: {
-    [key in Exclude<ResponseRuleTargets, 'header' | 'body_plain'>]: any;
+    [key in Exclude<ResponseRuleTargets, 'header'>]: any;
   };
 
   constructor(
