@@ -61,6 +61,8 @@ export class ResponseRulesInterpreter {
 
     if (rule.target === 'header') {
       value = this.request.header(rule.modifier);
+    } else if (rule.target === 'body_plain') {
+      value = this.request.body;
     } else {
       value = objectPathGet(this.targets[rule.target], rule.modifier);
     }
