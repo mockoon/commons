@@ -13,7 +13,9 @@ import {
  * Get the first route response for which at least one rule is fulfilled.
  */
 export class ResponseRulesInterpreter {
-  private targets: { [key in Exclude<ResponseRuleTargets, 'header'>]: any };
+  private targets: {
+    [key in Exclude<ResponseRuleTargets, 'header'>]: any;
+  };
 
   constructor(
     private routeResponses: RouteResponse[],
@@ -62,7 +64,11 @@ export class ResponseRulesInterpreter {
     if (rule.target === 'header') {
       value = this.request.header(rule.modifier);
     } else {
-      value = objectPathGet(this.targets[rule.target], rule.modifier);
+      if (rule.modifier) {
+        value = objectPathGet(this.targets[rule.target], rule.modifier);
+      } else {
+        value = this.request.body;
+      }
     }
 
     if (value === undefined) {
