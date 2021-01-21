@@ -14,7 +14,7 @@ import {
  */
 export class ResponseRulesInterpreter {
   private targets: {
-    [key in Exclude<ResponseRuleTargets, 'header'>]: any;
+    [key in Exclude<ResponseRuleTargets, 'header'> | 'bodyRaw']: any;
   };
 
   constructor(
@@ -66,8 +66,8 @@ export class ResponseRulesInterpreter {
     } else {
       if (rule.modifier) {
         value = objectPathGet(this.targets[rule.target], rule.modifier);
-      } else {
-        value = this.request.body;
+      } else if (!rule.modifier && rule.target === 'body') {
+        value = this.targets.bodyRaw;
       }
     }
 
@@ -113,7 +113,8 @@ export class ResponseRulesInterpreter {
     this.targets = {
       body,
       query: this.request.query,
-      params: this.request.params
+      params: this.request.params,
+      bodyRaw: this.request.body.toString()
     };
   }
 }
