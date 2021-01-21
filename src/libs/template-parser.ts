@@ -3,10 +3,9 @@ import { format as dateFormat } from 'date-fns';
 import { Request } from 'express';
 import faker from 'faker';
 import { compile as hbsCompile, HelperOptions, SafeString } from 'handlebars';
-import { random } from 'lodash';
 import { get as objectGet } from 'object-path';
 import { OldTemplatingHelpers } from './old-templating-helpers';
-import { IsEmpty } from './utils';
+import { IsEmpty, RandomInt } from './utils';
 
 /**
  * Handlebars may insert its own `options` object as the last argument.
@@ -191,7 +190,7 @@ const TemplateParserHelpers = function (request: Request) {
     ) {
       const randomItems = itemList
         .sort(() => 0.5 - Math.random())
-        .slice(0, random(min, max));
+        .slice(0, RandomInt(min, max));
 
       if (asArray === true) {
         return `["${randomItems.join('","')}"]`;
