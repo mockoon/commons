@@ -97,4 +97,44 @@ describe('Template parser', () => {
       expect(parseResult).to.be.equal('');
     });
   });
+
+  describe('Helper: someOf', () => {
+    it('should return one element', () => {
+      const parseResult = TemplateParser(
+        "{{someOf (array 'value1' 'value2' 'value3' 'value4' 'value5' 'value6') 1 1}}",
+        {} as any
+      );
+      const count = (parseResult.match(/value/g) || []).length;
+      expect(count).to.equal(1);
+    });
+
+    it('should return 1 to 3 elements', () => {
+      const parseResult = TemplateParser(
+        "{{someOf (array 'value1' 'value2' 'value3' 'value4' 'value5' 'value6') 1 3}}",
+        {} as any
+      );
+      const countItems = (parseResult.match(/value/g) || []).length;
+      expect(countItems).is.least(1);
+      expect(countItems).is.most(3);
+
+      const countSeparators = (parseResult.match(/,/g) || []).length;
+      expect(countSeparators).is.least(0);
+      expect(countSeparators).is.most(2);
+    });
+
+    it('should return 1 to 3 elements as array', () => {
+      const parseResult = TemplateParser(
+        "{{someOf (array 'value1' 'value2' 'value3' 'value4' 'value5' 'value6') 1 3 true}}",
+        {} as any
+      );
+      expect(parseResult.match(/^\[.*\]$/)?.length).to.equal(1);
+      const countItems = (parseResult.match(/value/g) || []).length;
+      expect(countItems).is.least(1);
+      expect(countItems).is.most(3);
+
+      const countSeparators = (parseResult.match(/,/g) || []).length;
+      expect(countSeparators).is.least(0);
+      expect(countSeparators).is.most(2);
+    });
+  });
 });
