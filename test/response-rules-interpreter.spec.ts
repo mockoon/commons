@@ -1258,6 +1258,74 @@ describe('Response rules interpreter', () => {
       ).chooseResponse();
       expect(routeResponse.body).to.be.equal('body17');
     });
+
+    it('should return response if JSON body property value is null', () => {
+      const request: Request = {
+        header: function (headerName: string) {
+          const headers = {
+            'Content-Type': 'application/json'
+          };
+
+          return headers[headerName];
+        },
+        body: '{"prop1": null}'
+      } as Request;
+
+      const routeResponse = new ResponseRulesInterpreter(
+        [
+          routeResponse403,
+          {
+            ...routeResponseTemplate,
+            rules: [
+              {
+                target: 'body',
+                modifier: 'prop1',
+                value: '',
+                isRegex: false
+              }
+            ],
+            body: 'body19'
+          }
+        ],
+        request,
+        false
+      ).chooseResponse();
+      expect(routeResponse.body).to.be.equal('body19');
+    });
+
+    it('should return response if JSON body property value is null nad rule value is null too', () => {
+      const request: Request = {
+        header: function (headerName: string) {
+          const headers = {
+            'Content-Type': 'application/json'
+          };
+
+          return headers[headerName];
+        },
+        body: '{"prop1": null}'
+      } as Request;
+
+      const routeResponse = new ResponseRulesInterpreter(
+        [
+          routeResponse403,
+          {
+            ...routeResponseTemplate,
+            rules: [
+              {
+                target: 'body',
+                modifier: 'prop1',
+                value: null,
+                isRegex: false
+              } as any
+            ],
+            body: 'body19'
+          }
+        ],
+        request,
+        false
+      ).chooseResponse();
+      expect(routeResponse.body).to.be.equal('body19');
+    });
   });
 
   describe('Complex rules (AND/OR)', () => {

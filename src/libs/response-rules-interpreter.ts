@@ -59,7 +59,7 @@ export class ResponseRulesInterpreter {
       return false;
     }
 
-    let value;
+    let value: any;
 
     if (rule.target === 'header') {
       value = this.request.header(rule.modifier);
@@ -75,6 +75,16 @@ export class ResponseRulesInterpreter {
       return false;
     }
 
+    // value may be explicitely null (JSON), this is considered as an empty string
+    if (value === null) {
+      value = '';
+    }
+
+    // rule value may be explicitely null (is shouldn't anymore), this is considered as an empty string too
+    if (rule.value === null) {
+      rule.value = '';
+    }
+
     let regex: RegExp;
     if (rule.isRegex) {
       regex = new RegExp(rule.value);
@@ -88,7 +98,7 @@ export class ResponseRulesInterpreter {
       return value.includes(rule.value);
     }
 
-    return value.toString() === rule.value.toString();
+    return String(value) === String(rule.value);
   };
 
   /**
