@@ -102,7 +102,7 @@ describe('Template parser', () => {
   describe('Helper: dateTimeShift', () => {
     it('Should return a date shifted the specified amount of days from now.', ()=>{
       const parseResult = TemplateParser(
-        '{{dateTimeShift shiftDays=2}}',
+        '{{dateTimeShift days=2}}',
         {} as any
       );
 
@@ -115,7 +115,7 @@ describe('Template parser', () => {
 
     it('Should return a date shifted by the requested amount from a specified start date.', ()=>{
       const parseResult = TemplateParser(
-        "{{dateTimeShift date='2021-02-01' shiftDays=2 shiftMonths=4}}",
+        "{{dateTimeShift date='2021-02-01' days=2 months=4}}",
         {} as any
       );
 
@@ -124,7 +124,7 @@ describe('Template parser', () => {
 
     it('Should return a date shifted by the requested amount from the specified start date in the specified format.', ()=>{
       const parseResult = TemplateParser(
-        "{{dateTimeShift date='2021-02-01' format='yyyy-MM-dd' shiftDays=2 shiftMonths=4}}",
+        "{{dateTimeShift date='2021-02-01' format='yyyy-MM-dd' days=2 months=4}}",
         {} as any
       );
 
@@ -133,7 +133,7 @@ describe('Template parser', () => {
 
     it('Should return a date time shifted by the requested amount from the specified start date in the specified format.', ()=>{
       const parseResult = TemplateParser(
-        "{{dateTimeShift date='2021-02-01T10:45:00' format=\"yyyy-MM-dd'T'HH:mm:ss\" shiftDays=8 shiftMonths=3 shiftHours=1 shiftMinutes=2 shiftSeconds=3}}",
+        "{{dateTimeShift date='2021-02-01T10:45:00' format=\"yyyy-MM-dd'T'HH:mm:ss\" days=8 months=3 hours=1 minutes=2 seconds=3}}",
         {} as any
       );
 

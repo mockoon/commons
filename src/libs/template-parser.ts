@@ -289,23 +289,23 @@ const TemplateParserHelpers = function (request: Request) {
       // If no date is specified, default to now. If a string is specified, then parse it to a date.
       const dateToShift = date === undefined ? new Date() : (typeof date === 'string' ? new Date(date) : date);
 
-      if (typeof options.hash['shiftDays'] === 'number') {
-        dateToShift.setDate(dateToShift.getDate() + options.hash['shiftDays']);
+      if (typeof options.hash['days'] === 'number') {
+        dateToShift.setDate(dateToShift.getDate() + options.hash['days']);
       }
-      if (typeof options.hash['shiftMonths']  === 'number') {
-        dateToShift.setMonth(dateToShift.getMonth() + options.hash['shiftMonths']);
+      if (typeof options.hash['months']  === 'number') {
+        dateToShift.setMonth(dateToShift.getMonth() + options.hash['months']);
       }
-      if (typeof options.hash['shiftYears']  === 'number') {
-        dateToShift.setFullYear(dateToShift.getFullYear() + options.hash['shiftYears']);
+      if (typeof options.hash['years']  === 'number') {
+        dateToShift.setFullYear(dateToShift.getFullYear() + options.hash['years']);
       }
-      if (typeof options.hash['shiftHours']  === 'number') {
-        dateToShift.setHours(dateToShift.getHours() + options.hash['shiftHours']);
+      if (typeof options.hash['hours']  === 'number') {
+        dateToShift.setHours(dateToShift.getHours() + options.hash['hours']);
       }
-      if (typeof options.hash['shiftMinutes']  === 'number') {
-        dateToShift.setMinutes(dateToShift.getMinutes() + options.hash['shiftMinutes']);
+      if (typeof options.hash['minutes']  === 'number') {
+        dateToShift.setMinutes(dateToShift.getMinutes() + options.hash['minutes']);
       }
-      if (typeof options.hash['shiftSeconds'] === 'number') {
-        dateToShift.setSeconds(dateToShift.getSeconds() + options.hash['shiftSeconds']);
+      if (typeof options.hash['seconds'] === 'number') {
+        dateToShift.setSeconds(dateToShift.getSeconds() + options.hash['seconds']);
       }
 
       return dateFormat(
