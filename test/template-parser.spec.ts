@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { TemplateParser } from '../src/libs/template-parser';
+import { format as dateFormat } from 'date-fns';
 
 describe('Template parser', () => {
   describe('Helper: concat', () => {
@@ -97,6 +98,48 @@ describe('Template parser', () => {
       expect(parseResult).to.be.equal('');
     });
   });
+
+  describe('Helper: dateTimeShift', () => {
+    it('Should return a date shifted the specified amount of days from now.', ()=>{
+      const parseResult = TemplateParser(
+        "{{dateTimeShift shiftDays=2}}",
+        {} as any
+      )
+
+      let date = new Date();
+      date.setDate(date.getDate() + 2);
+      // As our reference date here may differ slightly from the one interally used in the helper, it's more reliable to just compare the date/time with the seconds (and lower) excluded.
+      var dateString = dateFormat(date, "yyyy-MM-dd'T'HH:mm");
+      expect(parseResult).to.match(new RegExp(dateString + ".*"));
+    });
+
+    it('Should return a date shifted by the requested amount from a specified start date.', ()=>{
+      const parseResult = TemplateParser(
+        "{{dateTimeShift date='2021-02-01' shiftDays=2 shiftMonths=4}}",
+        {} as any
+      )
+
+      expect(parseResult).to.match(/2021-06-03.*/);
+    });
+
+    it('Should return a date shifted by the requested amount from the specified start date in the specified format.', ()=>{
+      const parseResult = TemplateParser(
+        "{{dateTimeShift date='2021-02-01' format='yyyy-MM-dd' shiftDays=2 shiftMonths=4}}",
+        {} as any
+      )
+
+      expect(parseResult).to.equals('2021-06-03');
+    });
+
+    it('Should return a date time shifted by the requested amount from the specified start date in the specified format.', ()=>{
+      const parseResult = TemplateParser(
+        "{{dateTimeShift date='2021-02-01T10:45:00' format=\"yyyy-MM-dd'T'HH:mm:ss\" shiftDays=8 shiftMonths=3 shiftHours=1 shiftMinutes=2 shiftSeconds=3}}",
+        {} as any
+      )
+
+      expect(parseResult).to.equals('2021-05-09T11:47:03');
+    });
+  })
 
   describe('Helper: someOf', () => {
     it('should return one element', () => {

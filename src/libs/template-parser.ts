@@ -280,6 +280,44 @@ const TemplateParserHelpers = function (request: Request) {
 
       return toConcat.join('');
     },
+    // Shift a date and time by a specified ammount.
+    dateTimeShift: function(options: HelperOptions) {
+
+      let date = options.hash['date'];
+      let format = options.hash['format'];
+
+      // If no date is specified, default to now. If a string is specified, then parse it to a date.
+      let dateToShift = date === undefined ? new Date() : (typeof date === 'string' ? new Date(date) : date);
+
+      if (typeof options.hash['shiftDays'] === 'number') {
+        dateToShift.setDate(dateToShift.getDate() + options.hash['shiftDays']);
+      }
+      if (typeof options.hash['shiftMonths']  === 'number') {
+        dateToShift.setMonth(dateToShift.getMonth() + options.hash['shiftMonths']);
+      }
+      if (typeof options.hash['shiftYears']  === 'number') {
+        dateToShift.setFullYear(dateToShift.getFullYear() + options.hash['shiftYears']);
+      }
+      if (typeof options.hash['shiftHours']  === 'number') {
+        dateToShift.setHours(dateToShift.getHours() + options.hash['shiftHours']);
+      }
+      if (typeof options.hash['shiftMinutes']  === 'number') {
+        dateToShift.setMinutes(dateToShift.getMinutes() + options.hash['shiftMinutes']);
+      }
+      if (typeof options.hash['shiftSeconds'] === 'number') {
+        dateToShift.setSeconds(dateToShift.getSeconds() + options.hash['shiftSeconds']);
+      }
+
+      return dateFormat(
+        dateToShift,
+        typeof format === 'string' ? format : "yyyy-MM-dd'T'HH:mm:ss.SSSxxx",
+        {
+          useAdditionalWeekYearTokens: true,
+          useAdditionalDayOfYearTokens: true
+        }
+        
+      );
+    },
     // set a variable to be used in the template
     setVar: function (
       name: string,
