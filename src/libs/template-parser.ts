@@ -283,11 +283,11 @@ const TemplateParserHelpers = function (request: Request) {
     // Shift a date and time by a specified ammount.
     dateTimeShift: function(options: HelperOptions) {
 
-      let date = options.hash['date'];
-      let format = options.hash['format'];
+      const date = options.hash['date'];
+      const format = options.hash['format'];
 
       // If no date is specified, default to now. If a string is specified, then parse it to a date.
-      let dateToShift = date === undefined ? new Date() : (typeof date === 'string' ? new Date(date) : date);
+      const dateToShift = date === undefined ? new Date() : (typeof date === 'string' ? new Date(date) : date);
 
       if (typeof options.hash['shiftDays'] === 'number') {
         dateToShift.setDate(dateToShift.getDate() + options.hash['shiftDays']);
@@ -315,7 +315,6 @@ const TemplateParserHelpers = function (request: Request) {
           useAdditionalWeekYearTokens: true,
           useAdditionalDayOfYearTokens: true
         }
-        
       );
     },
     // set a variable to be used in the template
