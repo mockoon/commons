@@ -147,6 +147,48 @@ describe('Template parser', () => {
     });
   });
 
+  describe('Helper: includes', () => {
+    it('should return true if a string includes a search string', () => {
+      const parseResult = TemplateParser(
+        "{{includes 'testdata' 'test'}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('true');
+    });
+
+    it('should return false if a string does not include a search string', () => {
+      const parseResult = TemplateParser(
+        "{{includes 'testdata' 'not'}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('false');
+    });
+  });
+
+  describe('Helper: substr', () => {
+    it('should return a substring of the provided string', () => {
+      const parseResult = TemplateParser(
+        "{{substr 'testdata' 4 4}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('data');
+    });
+  });
+
+  describe('Helper: indexof', () => {
+    it('should return the index of a matching substring', () => {
+      const parseResult = TemplateParser(
+        "{{indexOf 'testdata' 'd'}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('4');
+    });
+  });
+
   describe('Helper: someOf', () => {
     it('should return one element', () => {
       const parseResult = TemplateParser(

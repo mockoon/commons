@@ -335,6 +335,19 @@ const TemplateParserHelpers = function (request: Request) {
         }
       );
     },
+    indexOf: function (
+      data: string,
+      search: string,
+      position?: number | undefined
+    ) {
+      return data.indexOf(search, position);
+    },
+    includes: function (data: string, search: string) {
+      return data.includes(search);
+    },
+    substr: function (data: string, from: number, length: number | undefined) {
+      return data.substr(from, length);
+    },
     // set a variable to be used in the template
     setVar: function (
       name: string,
