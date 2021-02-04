@@ -22,20 +22,20 @@ The following rules apply to all contributions:
 
 ## Build and run the application
 
-### Prequistes
+### Prerequisites
 
-Some of the build steps require the linux `rm` command. If you are buliding on windows and this command is not in your path you will need to install it. Possible ways to do this are:
- - Install git for windows and include the commands in the path
- - Use Cmder as your terminal
+Some of the build steps require the Linux `rm` command. If you are buliding on Windows and this command is not in your path you will need to install it. Possible ways to do this are:
+ - Install git for Windows and include the commands in the path.
+ - Use Cmder as your terminal.
  - Use WSL.
 
 ### Build steps
 
- - Clone the repository: `git@github.com:mockoon/commons.git`
- - You will also need the main Mockoon app repository cloned: `git@github.com:mockoon/mockoon.git`
- - Run `npm install` to install dependancies.
+ - Clone the repository: `git@github.com:mockoon/commons.git`.
+ - You will also need the main Mockoon app repository cloned: `git@github.com:mockoon/mockoon.git`.
+ - Run `npm install` to install dependencies.
  - Run `npm run build` to build the commons package.
- - In the Mockoon app directroy, run `npm link ./path/to/local/mockoon/commons` to install your newly built commons package.
+ - In the Mockoon app directory, run `npm link ./path/to/local/mockoon/commons` to install your newly built commons package.
  - Follow the [build and run instructions](https://github.com/mockoon/mockoon/blob/master/CONTRIBUTING.md) for the main application.
 
 Run the unit tests and the linter before submitting pull requests. (`npm run test` and `npm run lint`).
