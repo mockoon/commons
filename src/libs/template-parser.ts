@@ -280,6 +280,60 @@ const TemplateParserHelpers = function (request: Request) {
 
       return toConcat.join('');
     },
+    // Shift a date and time by a specified ammount.
+    dateTimeShift: function (options: HelperOptions) {
+      let date: undefined | Date | string;
+      let format: undefined | string;
+
+      if (typeof options === 'object' && options.hash) {
+        date = options.hash['date'];
+        format = options.hash['format'];
+      }
+
+      // If no date is specified, default to now. If a string is specified, then parse it to a date.
+      const dateToShift: Date =
+        date === undefined
+          ? new Date()
+          : typeof date === 'string'
+          ? new Date(date)
+          : date;
+
+      if (typeof options === 'object' && options !== null && options.hash) {
+        if (typeof options.hash['days'] === 'number') {
+          dateToShift.setDate(dateToShift.getDate() + options.hash['days']);
+        }
+        if (typeof options.hash['months'] === 'number') {
+          dateToShift.setMonth(dateToShift.getMonth() + options.hash['months']);
+        }
+        if (typeof options.hash['years'] === 'number') {
+          dateToShift.setFullYear(
+            dateToShift.getFullYear() + options.hash['years']
+          );
+        }
+        if (typeof options.hash['hours'] === 'number') {
+          dateToShift.setHours(dateToShift.getHours() + options.hash['hours']);
+        }
+        if (typeof options.hash['minutes'] === 'number') {
+          dateToShift.setMinutes(
+            dateToShift.getMinutes() + options.hash['minutes']
+          );
+        }
+        if (typeof options.hash['seconds'] === 'number') {
+          dateToShift.setSeconds(
+            dateToShift.getSeconds() + options.hash['seconds']
+          );
+        }
+      }
+
+      return dateFormat(
+        dateToShift,
+        typeof format === 'string' ? format : "yyyy-MM-dd'T'HH:mm:ss.SSSxxx",
+        {
+          useAdditionalWeekYearTokens: true,
+          useAdditionalDayOfYearTokens: true
+        }
+      );
+    },
     // set a variable to be used in the template
     setVar: function (
       name: string,

@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { format as dateFormat } from 'date-fns';
 import { TemplateParser } from '../src/libs/template-parser';
 
 describe('Template parser', () => {
@@ -98,12 +99,61 @@ describe('Template parser', () => {
     });
   });
 
+  describe('Helper: dateTimeShift', () => {
+    it('Should not throw an error when passed with invalid parameters.', () => {
+      const parseResult = TemplateParser('{{dateTimeShift 1}}', {} as any);
+
+      // When invalid parameters are passed, the default should just be to return the current date with no shift.
+      const date = new Date();
+      const dateString = dateFormat(date, "yyyy-MM-dd'T'HH:mm");
+      expect(parseResult).to.match(new RegExp(dateString + '.*'));
+    });
+
+    it('Should return a date shifted the specified amount of days from now.', () => {
+      const parseResult = TemplateParser('{{dateTimeShift days=2}}', {} as any);
+
+      const date = new Date();
+      date.setDate(date.getDate() + 2);
+      // As our reference date here may differ slightly from the one interally used in the helper, it's more reliable to just compare the date/time with the seconds (and lower) excluded.
+      const dateString = dateFormat(date, "yyyy-MM-dd'T'HH:mm");
+      expect(parseResult).to.match(new RegExp(dateString + '.*'));
+    });
+
+    it('Should return a date shifted by the requested amount from a specified start date.', () => {
+      const parseResult = TemplateParser(
+        "{{dateTimeShift date='2021-02-01' days=2 months=4}}",
+        {} as any
+      );
+
+      expect(parseResult).to.match(/2021-06-03.*/);
+    });
+
+    it('Should return a date shifted by the requested amount from the specified start date in the specified format.', () => {
+      const parseResult = TemplateParser(
+        "{{dateTimeShift date='2021-02-01' format='yyyy-MM-dd' days=2 months=4}}",
+        {} as any
+      );
+
+      expect(parseResult).to.equals('2021-06-03');
+    });
+
+    it('Should return a date time shifted by the requested amount from the specified start date in the specified format.', () => {
+      const parseResult = TemplateParser(
+        "{{dateTimeShift date='2021-02-01T10:45:00' format=\"yyyy-MM-dd'T'HH:mm:ss\" days=8 months=3 hours=1 minutes=2 seconds=3}}",
+        {} as any
+      );
+
+      expect(parseResult).to.equals('2021-05-09T11:47:03');
+    });
+  });
+
   describe('Helper: someOf', () => {
     it('should return one element', () => {
       const parseResult = TemplateParser(
         "{{someOf (array 'value1' 'value2' 'value3' 'value4' 'value5' 'value6') 1 1}}",
         {} as any
       );
+
       const count = (parseResult.match(/value/g) || []).length;
       expect(count).to.equal(1);
     });
@@ -113,6 +163,7 @@ describe('Template parser', () => {
         "{{someOf (array 'value1' 'value2' 'value3' 'value4' 'value5' 'value6') 1 3}}",
         {} as any
       );
+
       const countItems = (parseResult.match(/value/g) || []).length;
       expect(countItems).is.least(1);
       expect(countItems).is.most(3);
