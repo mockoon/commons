@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { TemplateParser } from '../src/libs/template-parser';
 import { format as dateFormat } from 'date-fns';
+import { TemplateParser } from '../src/libs/template-parser';
 
 describe('Template parser', () => {
   describe('Helper: concat', () => {
@@ -100,11 +100,8 @@ describe('Template parser', () => {
   });
 
   describe('Helper: dateTimeShift', () => {
-    it('Should return a date shifted the specified amount of days from now.', ()=>{
-      const parseResult = TemplateParser(
-        '{{dateTimeShift days=2}}',
-        {} as any
-      );
+    it('Should return a date shifted the specified amount of days from now.', () => {
+      const parseResult = TemplateParser('{{dateTimeShift days=2}}', {} as any);
 
       const date = new Date();
       date.setDate(date.getDate() + 2);
@@ -113,7 +110,7 @@ describe('Template parser', () => {
       expect(parseResult).to.match(new RegExp(dateString + '.*'));
     });
 
-    it('Should return a date shifted by the requested amount from a specified start date.', ()=>{
+    it('Should return a date shifted by the requested amount from a specified start date.', () => {
       const parseResult = TemplateParser(
         "{{dateTimeShift date='2021-02-01' days=2 months=4}}",
         {} as any
@@ -122,7 +119,7 @@ describe('Template parser', () => {
       expect(parseResult).to.match(/2021-06-03.*/);
     });
 
-    it('Should return a date shifted by the requested amount from the specified start date in the specified format.', ()=>{
+    it('Should return a date shifted by the requested amount from the specified start date in the specified format.', () => {
       const parseResult = TemplateParser(
         "{{dateTimeShift date='2021-02-01' format='yyyy-MM-dd' days=2 months=4}}",
         {} as any
@@ -131,7 +128,7 @@ describe('Template parser', () => {
       expect(parseResult).to.equals('2021-06-03');
     });
 
-    it('Should return a date time shifted by the requested amount from the specified start date in the specified format.', ()=>{
+    it('Should return a date time shifted by the requested amount from the specified start date in the specified format.', () => {
       const parseResult = TemplateParser(
         "{{dateTimeShift date='2021-02-01T10:45:00' format=\"yyyy-MM-dd'T'HH:mm:ss\" days=8 months=3 hours=1 minutes=2 seconds=3}}",
         {} as any
