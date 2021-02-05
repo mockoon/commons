@@ -282,8 +282,8 @@ const TemplateParserHelpers = function (request: Request) {
     },
     // Shift a date and time by a specified ammount.
     dateTimeShift: function (options: HelperOptions) {
-      let date: undefined | Date | string = undefined;
-      let format: undefined | string = undefined;
+      let date: undefined | Date | string;
+      let format: undefined | string;
 
       if (typeof options === 'object' && options.hash) {
         date = options.hash['date'];
