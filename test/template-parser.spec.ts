@@ -100,6 +100,15 @@ describe('Template parser', () => {
   });
 
   describe('Helper: dateTimeShift', () => {
+    it('Should not throw an error when passed with invalid parameters.', () => {
+      const parseResult = TemplateParser('{{dateTimeShift 1}}', {} as any);
+
+      // When invalid parameters are passed, the default should just be to return the current date with no shift.
+      const date = new Date();
+      const dateString = dateFormat(date, "yyyy-MM-dd'T'HH:mm");
+      expect(parseResult).to.match(new RegExp(dateString + '.*'));
+    });
+
     it('Should return a date shifted the specified amount of days from now.', () => {
       const parseResult = TemplateParser('{{dateTimeShift days=2}}', {} as any);
 
