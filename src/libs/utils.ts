@@ -195,3 +195,20 @@ export const CreateTransaction = (
   routeUUID: response.routeUUID,
   proxied: request.proxied || false
 });
+
+/**
+ * Convert a string to base64
+ *
+ * @param text
+ */
+export const ToBase64 = (text: string): string => {
+  if (typeof btoa === 'function') {
+    return btoa(text);
+  }
+
+  if (typeof Buffer === 'function') {
+    return Buffer.from(text).toString('base64');
+  }
+
+  return text;
+};
