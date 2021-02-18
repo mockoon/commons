@@ -188,4 +188,28 @@ describe('Template parser', () => {
       expect(countSeparators).is.most(2);
     });
   });
+
+  describe('Helper: base64', () => {
+    it('should encode string to base64', () => {
+      const parseResult = TemplateParser("{{base64 'abc'}}", {} as any);
+      expect(parseResult).to.be.equal('YWJj');
+    });
+
+    it('should encode body property to base64', () => {
+      const parseResult = TemplateParser("{{base64 (body 'prop1')}}", {
+        bodyJSON: { prop1: '123' }
+      } as any);
+      expect(parseResult).to.be.equal('MTIz');
+    });
+
+    it('should encode block to base64', () => {
+      const parseResult = TemplateParser(
+        "{{#base64}}value: {{body 'prop1'}}{{/base64}}",
+        {
+          bodyJSON: { prop1: '123' }
+        } as any
+      );
+      expect(parseResult).to.be.equal('dmFsdWU6IDEyMw==');
+    });
+  });
 });

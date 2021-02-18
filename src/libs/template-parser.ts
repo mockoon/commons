@@ -5,7 +5,7 @@ import faker from 'faker';
 import { compile as hbsCompile, HelperOptions, SafeString } from 'handlebars';
 import { get as objectGet } from 'object-path';
 import { OldTemplatingHelpers } from './old-templating-helpers';
-import { IsEmpty, RandomInt } from './utils';
+import { IsEmpty, RandomInt, ToBase64 } from './utils';
 
 /**
  * Handlebars may insert its own `options` object as the last argument.
@@ -257,7 +257,8 @@ const TemplateParserHelpers = function (request: Request) {
         content = args[0];
       }
 
-      return new SafeString(btoa(content));
+      // convert content toString in case we pass a SafeString from another helper
+      return new SafeString(ToBase64(content.toString()));
     },
     // adds a newline to the output
     newline: function () {
