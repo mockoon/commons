@@ -121,7 +121,11 @@ const TemplateParserHelpers = function (request: Request) {
       return request.params[paramName];
     },
     // use params from query string ?param1=xxx&param2=yyy
-    queryParam: function (path: string, defaultValue: string) {
+    queryParam: function (
+      path: string,
+      defaultValue: string,
+      stringify: boolean = false
+    ) {
       // no path provided
       if (typeof path === 'object') {
         path = '';
@@ -141,13 +145,15 @@ const TemplateParserHelpers = function (request: Request) {
         return new SafeString(JSON.stringify(request.query));
       }
 
-      let value = objectGet(request.query, path);
+      const value = objectGet(request.query, path);
 
       if (Array.isArray(value) || typeof value === 'object') {
-        value = JSON.stringify(value);
+        stringify = true;
       }
 
-      return value !== undefined ? new SafeString(value) : defaultValue;
+      return value !== undefined
+        ? new SafeString(stringify ? JSON.stringify(value) : value)
+        : defaultValue;
     },
     // use content from request header
     header: function (headerName: string, defaultValue: string) {
