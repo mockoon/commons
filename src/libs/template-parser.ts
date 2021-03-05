@@ -112,7 +112,7 @@ const TemplateParserHelpers = function (request: Request) {
         return defaultValue;
       }
 
-      let value = objectGet(requestToParse, path);
+      const value = objectGet(requestToParse, path);
 
       if (Array.isArray(value) || typeof value === 'object') {
         stringify = true;
