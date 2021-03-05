@@ -80,7 +80,11 @@ const TemplateParserHelpers = function (request: Request) {
       return new SafeString(fakedContent);
     },
     // get json property from body
-    body: function (path: string, defaultValue: string) {
+    body: function (
+      path: string,
+      defaultValue: string,
+      stringify: boolean = false
+    ) {
       // no path provided
       if (typeof path === 'object') {
         path = '';
@@ -111,10 +115,12 @@ const TemplateParserHelpers = function (request: Request) {
       let value = objectGet(requestToParse, path);
 
       if (Array.isArray(value) || typeof value === 'object') {
-        value = JSON.stringify(value);
+        stringify = true;
       }
 
-      return value !== undefined ? new SafeString(value) : defaultValue;
+      return value !== undefined
+        ? new SafeString(stringify ? JSON.stringify(value) : value)
+        : defaultValue;
     },
     // use params from url /:param1/:param2
     urlParam: function (paramName: string) {
