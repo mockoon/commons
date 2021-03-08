@@ -165,6 +165,18 @@ describe('Template parser', () => {
 
       expect(parseResult).to.be.equal('false');
     });
+
+    it('should not fail when passing no parameters', () => {
+      const parseResult = TemplateParser('{{includes}}', {} as any);
+
+      expect(parseResult).to.be.equal('');
+    });
+
+    it('should not fail when passing only one parameter', () => {
+      const parseResult = TemplateParser("{{includes 'testdata'}}", {} as any);
+
+      expect(parseResult).to.be.equal('');
+    });
   });
 
   describe('Helper: substr', () => {
@@ -176,6 +188,24 @@ describe('Template parser', () => {
 
       expect(parseResult).to.be.equal('data');
     });
+
+    it('should return a substring of the provided string to the end', () => {
+      const parseResult = TemplateParser("{{substr 'testdata' 4}}", {} as any);
+
+      expect(parseResult).to.be.equal('data');
+    });
+
+    it('should not fail when passing no parameters', () => {
+      const parseResult = TemplateParser('{{substr}}', {} as any);
+
+      expect(parseResult).to.be.equal('');
+    });
+
+    it('should not fail when passing only one parameter', () => {
+      const parseResult = TemplateParser("{{substr 'testdata'}}", {} as any);
+
+      expect(parseResult).to.be.equal('');
+    });
   });
 
   describe('Helper: indexof', () => {
@@ -186,6 +216,27 @@ describe('Template parser', () => {
       );
 
       expect(parseResult).to.be.equal('4');
+    });
+
+    it('should return the index of a matching substring from a given starting position', () => {
+      const parseResult = TemplateParser(
+        "{{indexOf 'testdatadata' 'd' 6}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('8');
+    });
+
+    it('should not fail when passing no parameters', () => {
+      const parseResult = TemplateParser('{{indexOf}}', {} as any);
+
+      expect(parseResult).to.be.equal('');
+    });
+
+    it('should not fail when passing only one parameter', () => {
+      const parseResult = TemplateParser("{{indexOf 'testdata'}}", {} as any);
+
+      expect(parseResult).to.be.equal('');
     });
   });
 

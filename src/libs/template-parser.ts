@@ -340,13 +340,33 @@ const TemplateParserHelpers = function (request: Request) {
       search: string,
       position?: number | undefined
     ) {
-      return data.indexOf(search, position);
+      if (typeof data === 'string' && typeof search === 'string') {
+        if (typeof position === 'number') {
+          return data.indexOf(search, position);
+        } else {
+          return data.indexOf(search);
+        }
+      } else {
+        return '';
+      }
     },
     includes: function (data: string, search: string) {
-      return data.includes(search);
+      if (typeof data === 'string' && typeof search === 'string') {
+        return data.includes(search);
+      } else {
+        return '';
+      }
     },
     substr: function (data: string, from: number, length: number | undefined) {
-      return data.substr(from, length);
+      if (typeof data === 'string' && typeof from === 'number') {
+        if (typeof length === 'number') {
+          return data.substr(from, length);
+        } else {
+          return data.substr(from);
+        }
+      } else {
+        return '';
+      }
     },
     // set a variable to be used in the template
     setVar: function (
