@@ -383,13 +383,13 @@ const TemplateParserHelpers = function (request: Request) {
           typeof from === 'string' ||
           from instanceof SafeString)
       ) {
-        let fromValue =
+        const fromValue =
           typeof from === 'string' || from instanceof SafeString
             ? Number(from.toString())
             : from;
 
         // Length could still be undefined after this, but String.subStr allows the length parameter to be undefined.
-        let lengthValue =
+        const lengthValue =
           typeof length === 'string' || length instanceof SafeString
             ? Number(length.toString())
             : length;
