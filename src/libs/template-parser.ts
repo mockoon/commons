@@ -335,34 +335,72 @@ const TemplateParserHelpers = function (request: Request) {
         }
       );
     },
+    // Get's the index of a search string within another string.
     indexOf: function (
-      data: string,
-      search: string,
-      position?: number | undefined
+      data: string | SafeString,
+      search: string | SafeString,
+      position?: number | string | SafeString | undefined
     ) {
-      if (typeof data === 'string' && typeof search === 'string') {
+      if (
+        (typeof data === 'string' || data instanceof SafeString) &&
+        (typeof search === 'string' || search instanceof SafeString)
+      ) {
         if (typeof position === 'number') {
-          return data.indexOf(search, position);
+          return data.toString().indexOf(search.toString(), position);
+        } else if (
+          typeof position === 'string' ||
+          position instanceof SafeString
+        ) {
+          return data.toString().indexOf(search.toString(), Number(position));
         } else {
-          return data.indexOf(search);
+          return data.toString().indexOf(search.toString());
         }
       } else {
         return '';
       }
     },
-    includes: function (data: string, search: string) {
-      if (typeof data === 'string' && typeof search === 'string') {
-        return data.includes(search);
+    includes: function (
+      data: string | SafeString,
+      search: string | SafeString
+    ) {
+      if (
+        (typeof data === 'string' || data instanceof SafeString) &&
+        (typeof search === 'string' || search instanceof SafeString)
+      ) {
+        return data.toString().includes(search.toString());
       } else {
         return '';
       }
     },
-    substr: function (data: string, from: number, length: number | undefined) {
-      if (typeof data === 'string' && typeof from === 'number') {
-        if (typeof length === 'number') {
-          return data.substr(from, length);
+    substr: function (
+      data: string | SafeString,
+      from: number | string | SafeString,
+      length: number | string | SafeString | undefined
+    ) {
+      if (
+        (typeof data === 'string' || data instanceof SafeString) &&
+        (typeof from === 'number' ||
+          typeof from === 'string' ||
+          from instanceof SafeString)
+      ) {
+        let fromValue =
+          typeof from === 'string' || from instanceof SafeString
+            ? Number(from.toString())
+            : from;
+
+        // Length could still be undefined after this, but String.subStr allows the length parameter to be undefined.
+        let lengthValue =
+          typeof length === 'string' || length instanceof SafeString
+            ? Number(length.toString())
+            : length;
+
+        if (
+          typeof lengthValue !== 'undefined' &&
+          typeof lengthValue !== 'object'
+        ) {
+          return data.toString().substr(fromValue, lengthValue);
         } else {
-          return data.substr(from);
+          return data.toString().substr(fromValue);
         }
       } else {
         return '';

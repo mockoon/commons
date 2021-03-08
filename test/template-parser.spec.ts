@@ -189,8 +189,66 @@ describe('Template parser', () => {
       expect(parseResult).to.be.equal('data');
     });
 
-    it('should return a substring of the provided string to the end', () => {
+    it('should work correctly when from and length parameters are passed as strings', () => {
+      const parseResult = TemplateParser(
+        "{{substr 'testdata' '4' '4'}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('data');
+    });
+
+    it('should return a substring of the provided string to the end when the length parameter is excluded (from as a number)', () => {
       const parseResult = TemplateParser("{{substr 'testdata' 4}}", {} as any);
+
+      expect(parseResult).to.be.equal('data');
+    });
+
+    it('should return a substring of the provided string to the end when the length parameter is excluded (from as a string)', () => {
+      const parseResult = TemplateParser(
+        "{{substr 'testdata' '4'}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('data');
+    });
+
+    it('Should work correctly when variables are passed as parameters as numbers', () => {
+      const parseResult = TemplateParser(
+        "{{setVar 'testvar' 'testdata'}}{{setVar 'from' 4}}{{setVar 'length' 4}}{{substr testvar from length}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('data');
+    });
+
+    it('Should work correctly when variables are passed as parameters as strings', () => {
+      const parseResult = TemplateParser(
+        "{{setVar 'testvar' 'testdata'}}{{setVar 'from' '4'}}{{setVar 'length' '4'}}{{substr testvar from length}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('data');
+    });
+
+    it('Should work correctly when other helpers are used for parameters as numbers', () => {
+      const parseResult = TemplateParser(
+        "{{substr (body 'prop1') (body 'prop2') (body 'prop3')}}",
+        {
+          bodyJSON: { prop1: 'testdata', prop2: 4, prop3: 4 }
+        } as any
+      );
+
+      expect(parseResult).to.be.equal('data');
+    });
+
+    it('Should work correctly when other helpers are used for parameters as strings', () => {
+      const parseResult = TemplateParser(
+        "{{substr (body 'prop1') (body 'prop2') (body 'prop3')}}",
+        {
+          bodyJSON: { prop1: 'testdata', prop2: '4', prop3: '4' }
+        } as any
+      );
 
       expect(parseResult).to.be.equal('data');
     });
@@ -208,10 +266,10 @@ describe('Template parser', () => {
     });
   });
 
-  describe('Helper: indexof', () => {
+  describe('Helper: indexOf', () => {
     it('should return the index of a matching substring', () => {
       const parseResult = TemplateParser(
-        "{{indexOf 'testdata' 'd'}}",
+        "{{indexOf 'testdata' 'data'}}",
         {} as any
       );
 
@@ -220,11 +278,60 @@ describe('Template parser', () => {
 
     it('should return the index of a matching substring from a given starting position', () => {
       const parseResult = TemplateParser(
-        "{{indexOf 'testdatadata' 'd' 6}}",
+        "{{indexOf 'testdatadata' 'data' 6}}",
         {} as any
       );
 
       expect(parseResult).to.be.equal('8');
+    });
+
+    it('should still work correctly if the position parameter is passed as a string', () => {
+      const parseResult = TemplateParser(
+        "{{indexOf 'testdatadata' 'data' '6'}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('8');
+    });
+
+    it('Can return the index from a previously set variable', () => {
+      const parseResult = TemplateParser(
+        "{{setVar 'testvar' 'this is a test'}}{{indexOf testvar 'test'}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('10');
+    });
+
+    it('Can return the index from a previously set variable using a variable for the search string', () => {
+      const parseResult = TemplateParser(
+        "{{setVar 'testvar' 'this is a test'}}{{setVar 'searchstring' 'test'}}{{indexOf testvar searchstring}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('10');
+    });
+
+    it('Can return the index from a body property', () => {
+      const parseResult = TemplateParser(
+        "{{indexOf (body 'prop1') (body 'prop2')}}",
+        {
+          bodyJSON: { prop1: 'First test then test', prop2: 'test' }
+        } as any
+      );
+
+      expect(parseResult).to.be.equal('6');
+    });
+
+    it('Can return the index from a body property with a position', () => {
+      const parseResult = TemplateParser(
+        "{{indexOf (body 'prop1') (body 'prop2') (body 'prop3')}}",
+        {
+          bodyJSON: { prop1: 'First test then test', prop2: 'test', prop3: 10 }
+        } as any
+      );
+
+      expect(parseResult).to.be.equal('16');
     });
 
     it('should not fail when passing no parameters', () => {
