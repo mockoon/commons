@@ -359,6 +359,7 @@ const TemplateParserHelpers = function (request: Request) {
         return '';
       }
     },
+    // Returns if the provided search string is contained in the data string.
     includes: function (
       data: string | SafeString,
       search: string | SafeString
@@ -372,6 +373,7 @@ const TemplateParserHelpers = function (request: Request) {
         return '';
       }
     },
+    // Returns the substring of a string based on the passed in starting index and length.
     substr: function (
       data: string | SafeString,
       from: number | string | SafeString,
@@ -388,7 +390,6 @@ const TemplateParserHelpers = function (request: Request) {
             ? Number(from.toString())
             : from;
 
-        // Length could still be undefined after this, but String.subStr allows the length parameter to be undefined.
         const lengthValue =
           typeof length === 'string' || length instanceof SafeString
             ? Number(length.toString())
