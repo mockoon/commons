@@ -169,13 +169,13 @@ describe('Template parser', () => {
     it('should not fail when passing no parameters', () => {
       const parseResult = TemplateParser('{{includes}}', {} as any);
 
-      expect(parseResult).to.be.equal('');
+      expect(parseResult).to.be.equal('true');
     });
 
     it('should not fail when passing only one parameter', () => {
       const parseResult = TemplateParser("{{includes 'testdata'}}", {} as any);
 
-      expect(parseResult).to.be.equal('');
+      expect(parseResult).to.be.equal('true');
     });
   });
 
@@ -262,7 +262,7 @@ describe('Template parser', () => {
     it('should not fail when passing only one parameter', () => {
       const parseResult = TemplateParser("{{substr 'testdata'}}", {} as any);
 
-      expect(parseResult).to.be.equal('');
+      expect(parseResult).to.be.equal('testdata');
     });
   });
 
@@ -292,6 +292,24 @@ describe('Template parser', () => {
       );
 
       expect(parseResult).to.be.equal('8');
+    });
+
+    it('should be possible to search for a number', () => {
+      const parseResult = TemplateParser(
+        "{{indexOf 'testdata12345' 3}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('10');
+    });
+
+    it('should be possible to search for a number (as a string)', () => {
+      const parseResult = TemplateParser(
+        "{{indexOf 'testdata12345' '3'}}",
+        {} as any
+      );
+
+      expect(parseResult).to.be.equal('10');
     });
 
     it('Can return the index from a previously set variable', () => {
@@ -337,13 +355,13 @@ describe('Template parser', () => {
     it('should not fail when passing no parameters', () => {
       const parseResult = TemplateParser('{{indexOf}}', {} as any);
 
-      expect(parseResult).to.be.equal('');
+      expect(parseResult).to.be.equal('0');
     });
 
     it('should not fail when passing only one parameter', () => {
       const parseResult = TemplateParser("{{indexOf 'testdata'}}", {} as any);
 
-      expect(parseResult).to.be.equal('');
+      expect(parseResult).to.be.equal('0');
     });
   });
 

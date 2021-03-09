@@ -337,74 +337,79 @@ const TemplateParserHelpers = function (request: Request) {
     },
     // Get's the index of a search string within another string.
     indexOf: function (
-      data: string | SafeString,
-      search: string | SafeString,
-      position?: number | string | SafeString | undefined
+      data: string | SafeString | HelperOptions,
+      search: string | SafeString | HelperOptions | undefined,
+      position?: number | string | SafeString | HelperOptions | undefined
     ) {
-      if (
-        (typeof data === 'string' || data instanceof SafeString) &&
-        (typeof search === 'string' || search instanceof SafeString)
-      ) {
-        if (typeof position === 'number') {
-          return data.toString().indexOf(search.toString(), position);
-        } else if (
-          typeof position === 'string' ||
-          position instanceof SafeString
-        ) {
-          return data.toString().indexOf(search.toString(), Number(position));
-        } else {
-          return data.toString().indexOf(search.toString());
-        }
+      data =
+        typeof data === 'object' && !(data instanceof SafeString)
+          ? ''
+          : data.toString();
+
+      search =
+        (typeof search === 'object' || typeof search === 'undefined') &&
+        !(search instanceof SafeString)
+          ? ''
+          : search.toString();
+
+      position =
+        (typeof position === 'object' || typeof position === 'undefined') &&
+        !(position instanceof SafeString)
+          ? undefined
+          : Number(position.toString());
+
+      if (typeof position === 'number') {
+        return data.toString().indexOf(search.toString(), position);
       } else {
-        return '';
+        return data.toString().indexOf(search.toString());
       }
     },
     // Returns if the provided search string is contained in the data string.
     includes: function (
-      data: string | SafeString,
-      search: string | SafeString
+      data: string | SafeString | HelperOptions,
+      search: string | SafeString | HelperOptions | undefined
     ) {
-      if (
-        (typeof data === 'string' || data instanceof SafeString) &&
-        (typeof search === 'string' || search instanceof SafeString)
-      ) {
-        return data.toString().includes(search.toString());
-      } else {
-        return '';
-      }
+      data =
+        (typeof data === 'object' || typeof data == 'undefined') &&
+        !(data instanceof SafeString)
+          ? ''
+          : data.toString();
+
+      search =
+        (typeof search === 'object' || typeof search == 'undefined') &&
+        !(search instanceof SafeString)
+          ? ''
+          : search.toString();
+
+      return data.toString().includes(search.toString());
     },
     // Returns the substring of a string based on the passed in starting index and length.
     substr: function (
-      data: string | SafeString,
-      from: number | string | SafeString,
-      length: number | string | SafeString | undefined
+      data: string | SafeString | HelperOptions,
+      from: number | string | SafeString | HelperOptions | undefined,
+      length: number | string | SafeString | HelperOptions | undefined
     ) {
-      if (
-        (typeof data === 'string' || data instanceof SafeString) &&
-        (typeof from === 'number' ||
-          typeof from === 'string' ||
-          from instanceof SafeString)
-      ) {
-        const fromValue =
-          typeof from === 'string' || from instanceof SafeString
-            ? Number(from.toString())
-            : from;
+      data =
+        typeof data === 'object' && !(data instanceof SafeString)
+          ? ''
+          : data.toString();
 
-        const lengthValue =
-          typeof length === 'string' || length instanceof SafeString
-            ? Number(length.toString())
-            : length;
+      const fromValue =
+        (typeof from === 'object' || typeof from == 'undefined') &&
+        !(from instanceof SafeString)
+          ? 0
+          : Number(from.toString());
 
-        if (
-          typeof lengthValue !== 'undefined' &&
-          typeof lengthValue !== 'object'
-        ) {
-          return data.toString().substr(fromValue, lengthValue);
-        } else {
-          return data.toString().substr(fromValue);
-        }
+      const lengthValue =
+        (typeof length === 'object' || typeof length == 'undefined') &&
+        !(length instanceof SafeString)
+          ? undefined
+          : Number(length.toString());
+
+      if (typeof lengthValue !== 'undefined') {
+        return data.substr(fromValue, lengthValue);
       } else {
-        return '';
+        return data.substr(fromValue);
       }
     },
     // set a variable to be used in the template
