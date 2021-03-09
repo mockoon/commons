@@ -85,6 +85,22 @@ describe('Template parser', () => {
       expect(parseResult).to.be.equal('testtesttesttesttest');
     });
 
+    it('should set a variable in a different scope: repeat', () => {
+      const parseResult = TemplateParser(
+        "{{#repeat 5 comma=false}}{{setVar 'testvar' @index}}{{@testvar}}{{/repeat}}",
+        {} as any
+      );
+      expect(parseResult).to.be.equal('1234');
+    });
+
+    it('should set a variable in root scope and child scope: repeat', () => {
+      const parseResult = TemplateParser(
+        "{{setVar 'outsidevar' 'test'}}{{@root.outsidevar}}{{#repeat 5 comma=false}}{{setVar 'testvar' @index}}{{@testvar}}{{outsidevar}}{{/repeat}}",
+        {} as any
+      );
+      expect(parseResult).to.be.equal('testtest1test2test3test4test');
+    });
+
     it('should set a variable to empty value if none provided', () => {
       const parseResult = TemplateParser(
         "{{setVar 'testvar'}}{{testvar}}",

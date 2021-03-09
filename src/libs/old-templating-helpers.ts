@@ -32,7 +32,7 @@ export const OldTemplatingHelpers = {
       data.last = i === count - 1;
 
       // By using 'this' as the context the repeat block will inherit the current scope
-      content = content + options.fn(this, { data: data });
+      content = content + options.fn(this, { data });
 
       if (options.hash.comma !== false) {
         // Trim any whitespace left by handlebars and add a comma if it doesn't already exist,

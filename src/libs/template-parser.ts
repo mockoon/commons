@@ -353,7 +353,12 @@ const TemplateParserHelpers = function (request: Request) {
         return;
       }
 
-      options.data.root[name] = value;
+      // we are at the root level
+      if (options.data.root) {
+        options.data.root[name] = value;
+      } else {
+        options.data[name] = value;
+      }
     },
     // Handlebars hook when a helper is missing
     helperMissing: function () {
