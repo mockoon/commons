@@ -359,9 +359,9 @@ const TemplateParserHelpers = function (request: Request) {
           : Number(position.toString());
 
       if (typeof position === 'number') {
-        return data.toString().indexOf(search.toString(), position);
+        return data.indexOf(search, position);
       } else {
-        return data.toString().indexOf(search.toString());
+        return data.indexOf(search);
       }
     },
     // Returns if the provided search string is contained in the data string.
@@ -381,7 +381,7 @@ const TemplateParserHelpers = function (request: Request) {
           ? ''
           : search.toString();
 
-      return data.toString().includes(search.toString());
+      return data.includes(search);
     },
     // Returns the substring of a string based on the passed in starting index and length.
     substr: function (
