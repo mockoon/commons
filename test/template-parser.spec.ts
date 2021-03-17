@@ -265,7 +265,7 @@ describe('Template parser', () => {
     });
 
     it('should not return string enclosed in quotes', () => {
-      const parseResult = TemplateParser("{{queryParam 'param1'}}", {
+      const parseResult = TemplateParser("{{queryParam 'param1' 'default'}}", {
         query: { param1: 'test' }
       } as any);
       expect(parseResult).to.be.equal('test');
@@ -279,6 +279,16 @@ describe('Template parser', () => {
         } as any
       );
       expect(parseResult).to.be.equal('"test"');
+    });
+
+    it('should return default value enclosed in quotes', () => {
+      const parseResult = TemplateParser(
+        "{{queryParam 'param1' 'default' true}}",
+        {
+          query: { param2: 'test' }
+        } as any
+      );
+      expect(parseResult).to.be.equal('"default"');
     });
 
     it('should escape quotes in string', () => {

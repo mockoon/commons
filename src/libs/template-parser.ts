@@ -124,7 +124,7 @@ const TemplateParserHelpers = function (request: Request) {
     queryParam: function (
       path: string,
       defaultValue: string,
-      stringify: boolean = false
+      stringify: boolean
     ) {
       // no path provided
       if (typeof path === 'object') {
@@ -136,8 +136,15 @@ const TemplateParserHelpers = function (request: Request) {
         defaultValue = '';
       }
 
+      // no value for stringify provided
+      if (typeof stringify === 'object') {
+        stringify = false;
+      }
+
       if (!request.query) {
-        return defaultValue;
+        return new SafeString(
+          stringify ? JSON.stringify(defaultValue) : defaultValue
+        );
       }
 
       // if no path has been provided we want the full query string object as is
@@ -145,15 +152,14 @@ const TemplateParserHelpers = function (request: Request) {
         return new SafeString(JSON.stringify(request.query));
       }
 
-      const value = objectGet(request.query, path);
+      let value = objectGet(request.query, path);
+      value = value === undefined ? defaultValue : value;
 
       if (Array.isArray(value) || typeof value === 'object') {
         stringify = true;
       }
 
-      return value !== undefined
-        ? new SafeString(stringify ? JSON.stringify(value) : value)
-        : defaultValue;
+      return new SafeString(stringify ? JSON.stringify(value) : value);
     },
     // use content from request header
     header: function (headerName: string, defaultValue: string) {
