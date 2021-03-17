@@ -249,11 +249,25 @@ describe('Template parser', () => {
       expect(parseResult).to.be.equal('{"key":"value"}');
     });
 
+    it('should return default value enclosed in quotes', () => {
+      const parseResult = TemplateParser("{{body 'prop2' 'default' true}}", {
+        bodyJSON: { prop1: 'test' }
+      } as any);
+      expect(parseResult).to.be.equal('"default"');
+    });
+
     it('should return string enclosed in quotes', () => {
       const parseResult = TemplateParser("{{body 'prop1' undefined true}}", {
         bodyJSON: { prop1: 'test' }
       } as any);
       expect(parseResult).to.be.equal('"test"');
+    });
+
+    it('should not return string enclosed in quotes', () => {
+      const parseResult = TemplateParser("{{body 'prop1'}}", {
+        bodyJSON: { prop1: 'test' }
+      } as any);
+      expect(parseResult).to.be.equal('test');
     });
 
     it('should escape newlines and quotes in string', () => {
