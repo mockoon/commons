@@ -343,6 +343,83 @@ const TemplateParserHelpers = function (request: Request) {
         }
       );
     },
+    // Get's the index of a search string within another string.
+    indexOf: function (
+      data: string | SafeString | HelperOptions,
+      search: string | SafeString | HelperOptions | undefined,
+      position?: number | string | SafeString | HelperOptions | undefined
+    ) {
+      data =
+        typeof data === 'object' && !(data instanceof SafeString)
+          ? ''
+          : data.toString();
+
+      search =
+        (typeof search === 'object' || typeof search === 'undefined') &&
+        !(search instanceof SafeString)
+          ? ''
+          : search.toString();
+
+      position =
+        (typeof position === 'object' || typeof position === 'undefined') &&
+        !(position instanceof SafeString)
+          ? undefined
+          : Number(position.toString());
+
+      if (typeof position === 'number') {
+        return data.indexOf(search, position);
+      } else {
+        return data.indexOf(search);
+      }
+    },
+    // Returns if the provided search string is contained in the data string.
+    includes: function (
+      data: string | SafeString | HelperOptions,
+      search: string | SafeString | HelperOptions | undefined
+    ) {
+      data =
+        (typeof data === 'object' || typeof data == 'undefined') &&
+        !(data instanceof SafeString)
+          ? ''
+          : data.toString();
+
+      search =
+        (typeof search === 'object' || typeof search == 'undefined') &&
+        !(search instanceof SafeString)
+          ? ''
+          : search.toString();
+
+      return data.includes(search);
+    },
+    // Returns the substring of a string based on the passed in starting index and length.
+    substr: function (
+      data: string | SafeString | HelperOptions,
+      from: number | string | SafeString | HelperOptions | undefined,
+      length: number | string | SafeString | HelperOptions | undefined
+    ) {
+      data =
+        typeof data === 'object' && !(data instanceof SafeString)
+          ? ''
+          : data.toString();
+
+      const fromValue =
+        (typeof from === 'object' || typeof from == 'undefined') &&
+        !(from instanceof SafeString)
+          ? 0
+          : Number(from.toString());
+
+      const lengthValue =
+        (typeof length === 'object' || typeof length == 'undefined') &&
+        !(length instanceof SafeString)
+          ? undefined
+          : Number(length.toString());
+
+      if (typeof lengthValue !== 'undefined') {
+        return data.substr(fromValue, lengthValue);
+      } else {
+        return data.substr(fromValue);
+      }
+    },
     // set a variable to be used in the template
     setVar: function (
       name: string,
@@ -361,7 +438,12 @@ const TemplateParserHelpers = function (request: Request) {
         return;
       }
 
-      options.data.root[name] = value;
+      // we are at the root level
+      if (options.data.root) {
+        options.data.root[name] = value;
+      } else {
+        options.data[name] = value;
+      }
     },
     // Handlebars hook when a helper is missing
     helperMissing: function () {
