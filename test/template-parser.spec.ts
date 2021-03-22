@@ -446,7 +446,7 @@ describe('Template parser', () => {
       expect(parseResult).to.be.equal('dmFsdWU6IDEyMw==');
     });
   });
-  
+
   describe('Helper: body', () => {
     it('should return number without quotes', () => {
       const parseResult = TemplateParser("{{body 'prop1' undefined true}}", {
@@ -513,7 +513,7 @@ describe('Template parser', () => {
       );
     });
   });
-  
+
   describe('Helper: queryParam', () => {
     it('should return number without quotes', () => {
       const parseResult = TemplateParser(
