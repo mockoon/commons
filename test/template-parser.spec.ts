@@ -513,4 +513,93 @@ describe('Template parser', () => {
       );
     });
   });
+
+  describe('Helper: queryParam', () => {
+    it('should return number without quotes', () => {
+      const parseResult = TemplateParser(
+        "{{queryParam 'param1' undefined true}}",
+        {
+          query: { param1: 1 }
+        } as any
+      );
+      expect(parseResult).to.be.equal('1');
+    });
+
+    it('should return boolean value without quotes', () => {
+      const parseResult = TemplateParser(
+        "{{queryParam 'param1' undefined true}}",
+        {
+          query: { param1: true }
+        } as any
+      );
+      expect(parseResult).to.be.equal('true');
+    });
+
+    it('should return null value without quotes', () => {
+      const parseResult = TemplateParser(
+        "{{queryParam 'param1' undefined true}}",
+        {
+          query: { param1: null }
+        } as any
+      );
+      expect(parseResult).to.be.equal('null');
+    });
+
+    it('should always return array as JSON string', () => {
+      const parseResult = TemplateParser(
+        "{{queryParam 'param1' undefined false}}",
+        {
+          query: { param1: ['first', 'second'] }
+        } as any
+      );
+      expect(parseResult).to.be.equal('["first","second"]');
+    });
+
+    it('should always return object as JSON string', () => {
+      const parseResult = TemplateParser(
+        "{{queryParam 'param1' undefined false}}",
+        {
+          query: { param1: { key: 'value' } }
+        } as any
+      );
+      expect(parseResult).to.be.equal('{"key":"value"}');
+    });
+
+    it('should not return string enclosed in quotes', () => {
+      const parseResult = TemplateParser("{{queryParam 'param1' 'default'}}", {
+        query: { param1: 'test' }
+      } as any);
+      expect(parseResult).to.be.equal('test');
+    });
+
+    it('should return string enclosed in quotes', () => {
+      const parseResult = TemplateParser(
+        "{{queryParam 'param1' undefined true}}",
+        {
+          query: { param1: 'test' }
+        } as any
+      );
+      expect(parseResult).to.be.equal('"test"');
+    });
+
+    it('should return default value enclosed in quotes', () => {
+      const parseResult = TemplateParser(
+        "{{queryParam 'param1' 'default' true}}",
+        {
+          query: { param2: 'test' }
+        } as any
+      );
+      expect(parseResult).to.be.equal('"default"');
+    });
+
+    it('should escape quotes in string', () => {
+      const parseResult = TemplateParser(
+        "{{queryParam 'param1' undefined true}}",
+        {
+          query: { param1: 'This is a "message" with quotes.' }
+        } as any
+      );
+      expect(parseResult).to.be.equal('"This is a \\"message\\" with quotes."');
+    });
+  });
 });
