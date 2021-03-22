@@ -446,7 +446,74 @@ describe('Template parser', () => {
       expect(parseResult).to.be.equal('dmFsdWU6IDEyMw==');
     });
   });
+  
+  describe('Helper: body', () => {
+    it('should return number without quotes', () => {
+      const parseResult = TemplateParser("{{body 'prop1' undefined true}}", {
+        bodyJSON: { prop1: 1 }
+      } as any);
+      expect(parseResult).to.be.equal('1');
+    });
 
+    it('should return boolean value without quotes', () => {
+      const parseResult = TemplateParser("{{body 'prop1' undefined true}}", {
+        bodyJSON: { prop1: true }
+      } as any);
+      expect(parseResult).to.be.equal('true');
+    });
+
+    it('should return null value without quotes', () => {
+      const parseResult = TemplateParser("{{body 'prop1' undefined true}}", {
+        bodyJSON: { prop1: null }
+      } as any);
+      expect(parseResult).to.be.equal('null');
+    });
+
+    it('should always return array as JSON string', () => {
+      const parseResult = TemplateParser("{{body 'prop1' undefined false}}", {
+        bodyJSON: { prop1: ['first', 'second'] }
+      } as any);
+      expect(parseResult).to.be.equal('["first","second"]');
+    });
+
+    it('should always return object as JSON string', () => {
+      const parseResult = TemplateParser("{{body 'prop1' undefined false}}", {
+        bodyJSON: { prop1: { key: 'value' } }
+      } as any);
+      expect(parseResult).to.be.equal('{"key":"value"}');
+    });
+
+    it('should return default value enclosed in quotes', () => {
+      const parseResult = TemplateParser("{{body 'prop2' 'default' true}}", {
+        bodyJSON: { prop1: 'test' }
+      } as any);
+      expect(parseResult).to.be.equal('"default"');
+    });
+
+    it('should return string enclosed in quotes', () => {
+      const parseResult = TemplateParser("{{body 'prop1' undefined true}}", {
+        bodyJSON: { prop1: 'test' }
+      } as any);
+      expect(parseResult).to.be.equal('"test"');
+    });
+
+    it('should not return string enclosed in quotes', () => {
+      const parseResult = TemplateParser("{{body 'prop1'}}", {
+        bodyJSON: { prop1: 'test' }
+      } as any);
+      expect(parseResult).to.be.equal('test');
+    });
+
+    it('should escape newlines and quotes in string', () => {
+      const parseResult = TemplateParser("{{body 'prop1' undefined true}}", {
+        bodyJSON: { prop1: 'This \n is a "message" with quotes.' }
+      } as any);
+      expect(parseResult).to.be.equal(
+        '"This \\n is a \\"message\\" with quotes."'
+      );
+    });
+  });
+  
   describe('Helper: queryParam', () => {
     it('should return number without quotes', () => {
       const parseResult = TemplateParser(
