@@ -5,12 +5,7 @@ export interface MockoonServerOptions {
   /**
    * Method used by the library to refresh the environment information
    */
-  refreshEnvironmentFunction?: (environmentUUID: string) => Environment;
-
-  /**
-   * List of duplicated routes UUIDs in the environment
-   */
-  duplicatedRouteUUIDs?: Set<string>;
+  refreshEnvironmentFunction?: (environmentUUID: string) => Environment | null;
 
   /**
    * Allow passing a custom log provider

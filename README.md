@@ -13,7 +13,7 @@
   <h1>@Mockoon/commons</h1>
 </div>
 
-Mockoon's Commons library regroups Mockoon's shared code used in the  [main application](https://github.com/mockoon/mockoon) and the [CLI](https://github.com/mockoon/cli).
+Mockoon's Commons library regroups Mockoon's shared code used in the [main application](https://github.com/mockoon/mockoon) and the [CLI](https://github.com/mockoon/cli). it contains mostly typings and is designed to be used in both the browser and Node.js environments.
 
 ---
 
