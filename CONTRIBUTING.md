@@ -9,7 +9,11 @@
 
 Dependence between the three projects is highly probable, and having to contribute solely to this repository may be possible but rare. 
 
-Therefore, contributions to this repository should always stem from a parent's issue (bug or feature) opened in the main application's or the CLI's repositories. 
+Therefore, contributions to this repository should most of the time stem from a parent's issue (bug or feature) opened in the main application's or the CLI's repositories. 
+
+## Environment
+
+This library contains mostly typings and migrations designed to be used in both the browser and Node.js environments. Thus, it is safe to use it in Electron main or renderer processes, and the CLI.
 
 ## Contribution rules
 
