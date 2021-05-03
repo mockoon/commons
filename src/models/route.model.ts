@@ -21,7 +21,12 @@ export type ResponseRule = {
   isRegex: boolean;
 };
 
-export type ResponseRuleTargets = 'body' | 'query' | 'header' | 'params';
+export type ResponseRuleTargets =
+  | 'body'
+  | 'query'
+  | 'header'
+  | 'params'
+  | 'request_number';
 
 export type Route = {
   uuid: string;
@@ -31,6 +36,7 @@ export type Route = {
   responses: RouteResponse[];
   enabled: boolean;
   randomResponse: boolean;
+  sequentialResponse: boolean;
 };
 
 export type Header = { key: string; value: string };
