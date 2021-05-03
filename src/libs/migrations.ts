@@ -284,6 +284,20 @@ export const Migrations: {
         }
       });
     }
+  },
+
+  /**
+   * Add route sequentialResponse param
+   */
+  {
+    id: 14,
+    migrationFunction: (environment: Environment) => {
+      environment.routes.forEach((route: Route) => {
+        if (route.sequentialResponse === undefined) {
+          route.sequentialResponse = false;
+        }
+      });
+    }
   }
 ];
 
