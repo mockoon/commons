@@ -298,6 +298,17 @@ export const Migrations: {
         }
       });
     }
+  },
+  /**
+   * Add hostname
+   */
+  {
+    id: 15,
+    migrationFunction: (environment: Environment) => {
+      if (!environment.hostname) {
+        environment.hostname = '0.0.0.0';
+      }
+    }
   }
 ];
 
