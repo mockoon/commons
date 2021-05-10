@@ -248,7 +248,7 @@ export const Migrations: {
           }
 
           routeResponse.statusCode = parseInt(
-            (routeResponse.statusCode as unknown) as string,
+            routeResponse.statusCode as unknown as string,
             10
           );
         });
