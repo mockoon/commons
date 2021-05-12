@@ -298,6 +298,18 @@ export const Migrations: {
         }
       });
     }
+  },
+
+  /**
+   * Add proxyRemovePrefix param
+   */
+  {
+    id: 15,
+    migrationFunction: (environment: Environment) => {
+      if (environment.proxyRemovePrefix === undefined) {
+        environment.proxyRemovePrefix = false;
+      }
+    }
   }
 ];
 

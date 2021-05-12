@@ -9,6 +9,7 @@ export type Environment = {
   latency: number;
   routes: Route[];
   proxyMode: boolean;
+  proxyRemovePrefix: boolean;
   proxyHost: string;
   proxyReqHeaders: Header[];
   proxyResHeaders: Header[];
