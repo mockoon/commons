@@ -248,7 +248,7 @@ export const Migrations: {
           }
 
           routeResponse.statusCode = parseInt(
-            (routeResponse.statusCode as unknown) as string,
+            routeResponse.statusCode as unknown as string,
             10
           );
         });
@@ -299,11 +299,24 @@ export const Migrations: {
       });
     }
   },
+
+  /**
+   * Add proxyRemovePrefix param
+   */
+  {
+    id: 15,
+    migrationFunction: (environment: Environment) => {
+      if (environment.proxyRemovePrefix === undefined) {
+        environment.proxyRemovePrefix = false;
+      }
+    }
+  },
+
   /**
    * Add hostname
    */
   {
-    id: 15,
+    id: 16,
     migrationFunction: (environment: Environment) => {
       if (!environment.hostname) {
         environment.hostname = '0.0.0.0';
