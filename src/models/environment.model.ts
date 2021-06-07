@@ -5,6 +5,7 @@ export type Environment = {
   lastMigration: number;
   name: string;
   port: number;
+  hostname: string;
   endpointPrefix: string;
   latency: number;
   routes: Route[];

@@ -310,6 +310,18 @@ export const Migrations: {
         environment.proxyRemovePrefix = false;
       }
     }
+  },
+
+  /**
+   * Add hostname
+   */
+  {
+    id: 16,
+    migrationFunction: (environment: Environment) => {
+      if (!environment.hostname) {
+        environment.hostname = '0.0.0.0';
+      }
+    }
   }
 ];
 
