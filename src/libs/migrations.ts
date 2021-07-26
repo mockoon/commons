@@ -1,4 +1,4 @@
-import { v1 as uuid } from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { Environment } from '../models/environment.model';
 import { Header, Route, RouteResponse } from '../models/route.model';
 
