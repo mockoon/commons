@@ -322,6 +322,21 @@ export const Migrations: {
         environment.hostname = '0.0.0.0';
       }
     }
+  },
+  /**
+   * Add route response's fallbackTo404 option.
+   */
+  {
+    id: 17,
+    migrationFunction: (environment: Environment) => {
+      environment.routes.forEach((route: Route) => {
+        route.responses.forEach((routeResponse) => {
+          if (routeResponse.fallbackTo404 === undefined) {
+            routeResponse.fallbackTo404 = false;
+          }
+        });
+      });
+    }
   }
 ];
 
