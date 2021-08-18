@@ -1,7 +1,7 @@
 {
   "name": "@mockoon/commons",
   "description": "Mockoon's commons library. Used in Mockoon desktop application and CLI.",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "author": {
     "name": "Guillaume Monnet",
     "email": "hi@255kb.dev",
@@ -32,6 +32,7 @@
   "homepage": "https://github.com/mockoon/commons#readme",
   "funding": "https://mockoon.com/sponsor-us/",
   "dependencies": {
+    "joi": "17.4.2",
     "uuid": "8.3.2"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
 export * from './constants/common.constants';
+export * from './constants/environment-schema.constants';
 export * from './enums/errors.enum';
 export * from './libs/migrations';
 export * from './libs/utils';

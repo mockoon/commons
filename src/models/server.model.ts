@@ -2,6 +2,7 @@ import { Environment } from './environment.model';
 import { Header } from './route.model';
 
 export interface MockoonServerOptions {
+  environmentDirectory?: string;
   /**
    * Method used by the library to refresh the environment information
    */
