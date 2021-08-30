@@ -20,6 +20,7 @@ export type ResponseRule = {
   modifier: string;
   value: string;
   isRegex: boolean;
+  isEmpty: boolean;
 };
 
 export type ResponseRuleTargets =
