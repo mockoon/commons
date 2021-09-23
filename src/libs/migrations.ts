@@ -1,6 +1,12 @@
 import { v4 as uuid } from 'uuid';
 import { Environment } from '../models/environment.model';
-import { Header, Route, RouteResponse } from '../models/route.model';
+import {
+  Header,
+  ResponseRule,
+  Route,
+  RouteResponse
+} from '../models/route.model';
+import { ResponseRuleDefault } from '../constants/environment-schema.constants';
 
 /**
  * Old types use for compatibility purposes
@@ -334,6 +340,27 @@ export const Migrations: {
           if (routeResponse.fallbackTo404 === undefined) {
             routeResponse.fallbackTo404 = false;
           }
+        });
+      });
+    }
+  },
+  /**
+   * Replaced isRegex in Response Rules for operator field.
+   */
+  {
+    id: 18,
+    migrationFunction: (environment: Environment) => {
+      environment.routes.forEach((route: Route) => {
+        route.responses.forEach((routeResponse) => {
+          (routeResponse.rules as Array<ResponseRule & {isRegex?: boolean}>).forEach((rule) => {
+            if (rule.isRegex) {
+              rule.operator = 'regex';
+            }
+            if(rule.operator === undefined) {
+              rule.operator = ResponseRuleDefault.operator;
+            }
+            delete rule.isRegex;
+          });
         });
       });
     }
