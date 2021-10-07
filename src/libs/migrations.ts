@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { ResponseRuleDefault } from '../constants/environment-schema.constants';
 import { Environment } from '../models/environment.model';
 import {
   Header,
@@ -6,7 +7,6 @@ import {
   Route,
   RouteResponse
 } from '../models/route.model';
-import { ResponseRuleDefault } from '../constants/environment-schema.constants';
 
 /**
  * Old types use for compatibility purposes
@@ -352,11 +352,13 @@ export const Migrations: {
     migrationFunction: (environment: Environment) => {
       environment.routes.forEach((route: Route) => {
         route.responses.forEach((routeResponse) => {
-          (routeResponse.rules as Array<ResponseRule & {isRegex?: boolean}>).forEach((rule) => {
+          (
+            routeResponse.rules as Array<ResponseRule & { isRegex?: boolean }>
+          ).forEach((rule) => {
             if (rule.isRegex) {
               rule.operator = 'regex';
             }
-            if(rule.operator === undefined) {
+            if (rule.operator === undefined) {
               rule.operator = ResponseRuleDefault.operator;
             }
             delete rule.isRegex;

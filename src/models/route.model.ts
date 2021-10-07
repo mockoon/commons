@@ -15,11 +15,7 @@ export type RouteResponse = {
   fallbackTo404: boolean;
 };
 
-export type ResponseRuleOperators =
-  | 'equals'
-  | 'regex'
-  | 'null'
-  | 'empty_array';
+export type ResponseRuleOperators = 'equals' | 'regex' | 'null' | 'empty_array';
 
 export type ResponseRule = {
   target: ResponseRuleTargets;
