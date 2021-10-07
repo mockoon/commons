@@ -64,7 +64,7 @@ export const ResponseRuleDefault: ResponseRule = {
   target: 'body',
   modifier: '',
   value: '',
-  isRegex: false
+  operator: 'equals'
 };
 
 export const HeaderDefault: Header = {
@@ -140,8 +140,9 @@ export const RouteSchema = Joi.object<Route>({
                 .allow('')
                 .failover(ResponseRuleDefault.value)
                 .required(),
-              isRegex: Joi.boolean()
-                .failover(ResponseRuleDefault.isRegex)
+              operator: Joi.string()
+                .valid('equals', 'regex', 'null', 'empty_array')
+                .failover(ResponseRuleDefault.operator)
                 .required()
             }),
             Joi.any().strip()
