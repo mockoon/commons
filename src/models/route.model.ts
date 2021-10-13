@@ -29,7 +29,8 @@ export type ResponseRuleTargets =
   | 'query'
   | 'header'
   | 'params'
-  | 'request_number';
+  | 'request_number'
+  | 'cookie';
 
 export type Route = {
   uuid: string;
