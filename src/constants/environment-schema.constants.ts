@@ -129,7 +129,14 @@ export const RouteSchema = Joi.object<Route>({
           .items(
             Joi.object<ResponseRule>({
               target: Joi.string()
-                .valid('body', 'query', 'header', 'params', 'request_number')
+                .valid(
+                  'body',
+                  'query',
+                  'header',
+                  'params',
+                  'request_number',
+                  'cookie'
+                )
                 .failover(ResponseRuleDefault.target)
                 .required(),
               modifier: Joi.string()
