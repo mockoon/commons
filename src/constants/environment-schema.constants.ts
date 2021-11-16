@@ -77,12 +77,68 @@ const UUIDSchema = Joi.string()
   .failover(() => uuid())
   .required();
 
-const HeaderSchema = Joi.object<Header>({
+const HeaderSchema = Joi.object<Header, true>({
   key: Joi.string().allow('').required(),
   value: Joi.string().allow('').required()
 });
 
-export const RouteSchema = Joi.object<Route>({
+const RouteResponseRuleSchema = Joi.object<ResponseRule, true>({
+  target: Joi.string()
+    .valid('body', 'query', 'header', 'params', 'request_number', 'cookie')
+    .failover(ResponseRuleDefault.target)
+    .required(),
+  modifier: Joi.string()
+    .allow('')
+    .failover(ResponseRuleDefault.modifier)
+    .required(),
+  value: Joi.string().allow('').failover(ResponseRuleDefault.value).required(),
+  operator: Joi.string()
+    .valid('equals', 'regex', 'null', 'empty_array')
+    .failover(ResponseRuleDefault.operator)
+    .required()
+});
+
+const RouteResponseSchema = Joi.object<RouteResponse, true>({
+  uuid: UUIDSchema,
+  body: Joi.string().allow('').failover(RouteResponseDefault.body).required(),
+  latency: Joi.number()
+    .min(0)
+    .failover(RouteResponseDefault.latency)
+    .required(),
+  statusCode: Joi.number()
+    .min(100)
+    .max(999)
+    .failover(RouteResponseDefault.statusCode)
+    .required(),
+  label: Joi.string().allow('').failover(RouteResponseDefault.label).required(),
+  headers: Joi.array()
+    .items(HeaderSchema, Joi.any().strip())
+    .failover(RouteResponseDefault.headers)
+    .required(),
+  filePath: Joi.string()
+    .allow('')
+    .failover(RouteResponseDefault.filePath)
+    .required(),
+  sendFileAsBody: Joi.boolean()
+    .failover(RouteResponseDefault.sendFileAsBody)
+    .required(),
+  rules: Joi.array()
+    .items(RouteResponseRuleSchema, Joi.any().strip())
+    .failover(RouteResponseDefault.rules)
+    .required(),
+  rulesOperator: Joi.string()
+    .valid('OR', 'AND')
+    .failover(RouteResponseDefault.rulesOperator)
+    .required(),
+  disableTemplating: Joi.boolean()
+    .failover(RouteResponseDefault.disableTemplating)
+    .required(),
+  fallbackTo404: Joi.boolean()
+    .failover(RouteResponseDefault.fallbackTo404)
+    .required()
+});
+
+export const RouteSchema = Joi.object<Route, true>({
   uuid: UUIDSchema,
   documentation: Joi.string()
     .allow('')
@@ -94,81 +150,7 @@ export const RouteSchema = Joi.object<Route>({
     .required(),
   endpoint: Joi.string().allow('').failover(RouteDefault.endpoint).required(),
   responses: Joi.array()
-    .items(
-      Joi.object<RouteResponse>({
-        uuid: UUIDSchema,
-        body: Joi.string()
-          .allow('')
-          .failover(RouteResponseDefault.body)
-          .required(),
-        latency: Joi.number()
-          .min(0)
-          .failover(RouteResponseDefault.latency)
-          .required(),
-        statusCode: Joi.number()
-          .min(100)
-          .max(999)
-          .failover(RouteResponseDefault.statusCode)
-          .required(),
-        label: Joi.string()
-          .allow('')
-          .failover(RouteResponseDefault.label)
-          .required(),
-        headers: Joi.array()
-          .items(HeaderSchema, Joi.any().strip())
-          .failover(RouteResponseDefault.headers)
-          .required(),
-        filePath: Joi.string()
-          .allow('')
-          .failover(RouteResponseDefault.filePath)
-          .required(),
-        sendFileAsBody: Joi.boolean()
-          .failover(RouteResponseDefault.sendFileAsBody)
-          .required(),
-        rules: Joi.array()
-          .items(
-            Joi.object<ResponseRule>({
-              target: Joi.string()
-                .valid(
-                  'body',
-                  'query',
-                  'header',
-                  'params',
-                  'request_number',
-                  'cookie'
-                )
-                .failover(ResponseRuleDefault.target)
-                .required(),
-              modifier: Joi.string()
-                .allow('')
-                .failover(ResponseRuleDefault.modifier)
-                .required(),
-              value: Joi.string()
-                .allow('')
-                .failover(ResponseRuleDefault.value)
-                .required(),
-              operator: Joi.string()
-                .valid('equals', 'regex', 'null', 'empty_array')
-                .failover(ResponseRuleDefault.operator)
-                .required()
-            }),
-            Joi.any().strip()
-          )
-          .failover(RouteResponseDefault.rules)
-          .required(),
-        rulesOperator: Joi.string()
-          .valid('OR', 'AND')
-          .failover(RouteResponseDefault.rulesOperator)
-          .required(),
-        disableTemplating: Joi.boolean()
-          .failover(RouteResponseDefault.disableTemplating)
-          .required(),
-        fallbackTo404: Joi.boolean()
-          .failover(RouteResponseDefault.fallbackTo404)
-          .required()
-      }),
-      Joi.any().strip()
-    )
+    .items(RouteResponseSchema, Joi.any().strip())
     .failover(RouteDefault.responses)
     .required(),
   enabled: Joi.boolean().failover(RouteDefault.enabled).required(),
@@ -180,7 +162,7 @@ export const RouteSchema = Joi.object<Route>({
     .required()
 });
 
-export const EnvironmentSchema = Joi.object<Environment>({
+export const EnvironmentSchema = Joi.object<Environment, true>({
   uuid: UUIDSchema,
   lastMigration: Joi.number()
     .failover(EnvironmentDefault.lastMigration)
