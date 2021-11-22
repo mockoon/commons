@@ -1,7 +1,10 @@
 import * as Joi from 'joi';
 import { v4 as uuid } from 'uuid';
 import { HighestMigrationId } from '../libs/migrations';
-import { Environment } from '../models/environment.model';
+import {
+  Environment,
+  EnvironmentTLSOptions
+} from '../models/environment.model';
 import {
   Header,
   ResponseRule,
@@ -23,7 +26,15 @@ export const EnvironmentDefault: Environment = {
   proxyMode: false,
   proxyHost: '',
   proxyRemovePrefix: false,
-  https: false,
+  tlsOptions: {
+    enabled: false,
+    type: 'CERT',
+    pfxPath: '',
+    certPath: '',
+    keyPath: '',
+    caPath: '',
+    passphrase: ''
+  },
   cors: true,
   headers: [],
   proxyReqHeaders: [],
@@ -80,6 +91,36 @@ const UUIDSchema = Joi.string()
 const HeaderSchema = Joi.object<Header, true>({
   key: Joi.string().allow('').required(),
   value: Joi.string().allow('').required()
+});
+
+const TLSOptionsSchema = Joi.object<EnvironmentTLSOptions, true>({
+  enabled: Joi.boolean()
+    .failover(EnvironmentDefault.tlsOptions.enabled)
+    .required(),
+  type: Joi.string()
+    .valid('CERT', 'PFX')
+    .failover(EnvironmentDefault.tlsOptions.type)
+    .required(),
+  pfxPath: Joi.string()
+    .allow('')
+    .failover(EnvironmentDefault.tlsOptions.pfxPath)
+    .required(),
+  certPath: Joi.string()
+    .allow('')
+    .failover(EnvironmentDefault.tlsOptions.certPath)
+    .required(),
+  keyPath: Joi.string()
+    .allow('')
+    .failover(EnvironmentDefault.tlsOptions.keyPath)
+    .required(),
+  caPath: Joi.string()
+    .allow('')
+    .failover(EnvironmentDefault.tlsOptions.caPath)
+    .required(),
+  passphrase: Joi.string()
+    .allow('')
+    .failover(EnvironmentDefault.tlsOptions.passphrase)
+    .required()
 });
 
 const RouteResponseRuleSchema = Joi.object<ResponseRule, true>({
@@ -191,7 +232,7 @@ export const EnvironmentSchema = Joi.object<Environment, true>({
   proxyRemovePrefix: Joi.boolean()
     .failover(EnvironmentDefault.proxyRemovePrefix)
     .required(),
-  https: Joi.boolean().failover(EnvironmentDefault.https).required(),
+  tlsOptions: TLSOptionsSchema,
   cors: Joi.boolean().failover(EnvironmentDefault.cors).required(),
   headers: Joi.array()
     .items(HeaderSchema, Joi.any().strip())

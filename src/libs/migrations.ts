@@ -1,5 +1,8 @@
 import { v4 as uuid } from 'uuid';
-import { ResponseRuleDefault } from '../constants/environment-schema.constants';
+import {
+  EnvironmentDefault,
+  ResponseRuleDefault
+} from '../constants/environment-schema.constants';
 import { Environment } from '../models/environment.model';
 import {
   Header,
@@ -28,6 +31,8 @@ type RouteAsResponse = Route & {
 // old route response with status code as string
 type RouteResponseWithStringStatus = RouteResponse | { statusCode: string };
 
+// old environment with https property
+type EnvironmentWithHttps = Environment & { https: boolean };
 /**
  * List of migration functions.
  *
@@ -50,8 +55,8 @@ export const Migrations: {
       if (!environment.proxyHost) {
         environment.proxyHost = '';
       }
-      if (!environment.https) {
-        environment.https = false;
+      if (!(environment as EnvironmentWithHttps).https) {
+        (environment as EnvironmentWithHttps).https = false;
       }
     }
   },
@@ -365,6 +370,27 @@ export const Migrations: {
           });
         });
       });
+    }
+  },
+  /**
+   * Replaced https by tlsOptions object.
+   */
+  {
+    id: 19,
+    migrationFunction: (environment: Environment) => {
+      if (!environment.tlsOptions) {
+        environment.tlsOptions = {
+          enabled: (environment as EnvironmentWithHttps).https,
+          type: EnvironmentDefault.tlsOptions.type,
+          pfxPath: EnvironmentDefault.tlsOptions.pfxPath,
+          certPath: EnvironmentDefault.tlsOptions.certPath,
+          keyPath: EnvironmentDefault.tlsOptions.keyPath,
+          caPath: EnvironmentDefault.tlsOptions.caPath,
+          passphrase: EnvironmentDefault.tlsOptions.passphrase
+        };
+      }
+
+      delete environment['https'];
     }
   }
 ];
