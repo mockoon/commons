@@ -1,7 +1,7 @@
 {
   "name": "@mockoon/commons",
   "description": "Mockoon's commons library. Used in Mockoon desktop application and CLI.",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "author": {
     "name": "Guillaume Monnet",
     "email": "hi@255kb.dev",
@@ -38,17 +38,17 @@
   "devDependencies": {
     "@types/chai": "4.2.22",
     "@types/mocha": "8.2.2",
-    "@types/uuid": "8.3.1",
-    "@typescript-eslint/eslint-plugin": "4.33.0",
-    "@typescript-eslint/parser": "4.33.0",
+    "@types/uuid": "8.3.3",
+    "@typescript-eslint/eslint-plugin": "5.4.0",
+    "@typescript-eslint/parser": "5.4.0",
     "chai": "4.3.4",
-    "eslint": "7.32.0",
+    "eslint": "8.3.0",
     "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-jsdoc": "36.1.0",
+    "eslint-plugin-jsdoc": "37.0.3",
     "mocha": "8.4.0",
     "prettier": "2.4.1",
     "prettier-plugin-organize-imports": "2.3.4",
     "ts-mocha": "8.0.0",
-    "typescript": "4.4.3"
+    "typescript": "4.5.2"
   }
 }
