@@ -121,7 +121,10 @@ const TLSOptionsSchema = Joi.object<EnvironmentTLSOptions, true>({
     .allow('')
     .failover(EnvironmentDefault.tlsOptions.passphrase)
     .required()
-});
+})
+  .failover(EnvironmentDefault.tlsOptions)
+  .default(EnvironmentDefault.tlsOptions)
+  .options({ stripUnknown: true });
 
 const RouteResponseRuleSchema = Joi.object<ResponseRule, true>({
   target: Joi.string()
