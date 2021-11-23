@@ -49,19 +49,3 @@ export const IsValidURL = (address: string): boolean => {
     return false;
   }
 };
-
-/**
- * Test a header validity
- *
- * @param headerName
- */
-export const TestHeaderValidity = (headerName: string) => {
-  if (
-    headerName &&
-    headerName.match(/[^A-Za-z0-9\-\!\#\$\%\&\'\*\+\.\^\_\`\|\~]/g)
-  ) {
-    return true;
-  }
-
-  return false;
-};
