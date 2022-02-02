@@ -1,12 +1,10 @@
 import { Environment } from './environment.model';
 import { Route } from './route.model';
 
-export type ExportDataEnvironment = { type: 'environment'; item: Environment };
-export type ExportDataRoute = { type: 'route'; item: Route };
-
-export type ExportData = (ExportDataEnvironment | ExportDataRoute)[];
-
-export type Export = {
+export type LegacyExport = {
   source: string;
-  data: ExportData;
+  data: (
+    | { type: 'environment'; item: Environment }
+    | { type: 'route'; item: Route }
+  )[];
 };
