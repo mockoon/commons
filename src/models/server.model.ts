@@ -1,5 +1,5 @@
 import { Environment } from './environment.model';
-import { Header } from './route.model';
+import { Header, Methods } from './route.model';
 
 export interface MockoonServerOptions {
   environmentDirectory?: string;
@@ -25,7 +25,7 @@ export interface MockoonServerOptions {
  */
 export type Transaction = {
   request: {
-    method: string;
+    method: keyof typeof Methods;
     urlPath: string | null;
     route: string | null;
     params: { name: string; value: string }[];

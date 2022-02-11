@@ -1,5 +1,7 @@
 import { Header } from '../models/route.model';
 
+export const INDENT_SIZE = 2;
+
 export const CORSHeaders: Header[] = [
   { key: 'Access-Control-Allow-Origin', value: '*' },
   {

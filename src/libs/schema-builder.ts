@@ -1,4 +1,3 @@
-import cloneDeep from 'lodash.clonedeep';
 import { v4 as uuid } from 'uuid';
 import {
   EnvironmentDefault,
@@ -6,9 +5,11 @@ import {
   RouteDefault,
   RouteResponseDefault
 } from '../constants/environment-schema.constants';
+import { CloneObject } from '../libs/utils';
 import { Environment } from '../models/environment.model';
 import {
   Header,
+  Methods,
   ResponseRule,
   Route,
   RouteResponse
@@ -39,7 +40,7 @@ export const BuildResponseRule = (): ResponseRule => ({
 export const CloneRouteResponse = (
   routeResponse: RouteResponse
 ): RouteResponse => ({
-  ...cloneDeep(routeResponse),
+  ...CloneObject(routeResponse),
   uuid: uuid(),
   label: `${routeResponse.label} (copy)`
 });
@@ -84,7 +85,7 @@ export const BuildDemoEnvironment = (): Environment => ({
   routes: [
     {
       ...BuildRoute(),
-      method: 'get',
+      method: Methods.get,
       endpoint: 'users',
       documentation:
         'Generate random body (JSON, text, CSV, etc) with templating',
@@ -99,7 +100,7 @@ export const BuildDemoEnvironment = (): Environment => ({
     },
     {
       ...BuildRoute(),
-      method: 'post',
+      method: Methods.post,
       endpoint: 'content/:param1',
       documentation: 'Use multiple responses with rules',
       responses: [
@@ -139,7 +140,7 @@ export const BuildDemoEnvironment = (): Environment => ({
     },
     {
       ...BuildRoute(),
-      method: 'get',
+      method: Methods.get,
       endpoint: 'file/:pageName',
       documentation:
         "Serve a file dynamically depending on the path param 'pageName'.",
@@ -155,7 +156,7 @@ export const BuildDemoEnvironment = (): Environment => ({
     },
     {
       ...BuildRoute(),
-      method: 'put',
+      method: Methods.put,
       endpoint: 'path/with/pattern(s)?/*',
       documentation: 'Path supports various patterns',
       responses: [
@@ -168,7 +169,7 @@ export const BuildDemoEnvironment = (): Environment => ({
     },
     {
       ...BuildRoute(),
-      method: 'get',
+      method: Methods.get,
       endpoint: 'forward-and-record',
       documentation: 'Can Mockoon forward or record entering requests?',
       responses: [
