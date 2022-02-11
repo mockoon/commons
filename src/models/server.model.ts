@@ -30,7 +30,7 @@ export type Transaction = {
     route: string | null;
     params: { name: string; value: string }[];
     query: string | null;
-    queryParams: { name: string; value: string }[];
+    queryParams: any;
     body: any;
     headers: Header[];
   };
