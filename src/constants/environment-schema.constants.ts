@@ -7,6 +7,7 @@ import {
 } from '../models/environment.model';
 import {
   Header,
+  Methods,
   ResponseRule,
   Route,
   RouteResponse
@@ -46,7 +47,7 @@ export const RouteDefault: Route = {
     return uuid();
   },
   documentation: '',
-  method: 'get',
+  method: Methods.get,
   endpoint: '',
   responses: [],
   enabled: true,
@@ -189,7 +190,15 @@ export const RouteSchema = Joi.object<Route, true>({
     .failover(RouteDefault.documentation)
     .required(),
   method: Joi.string()
-    .valid('get', 'post', 'put', 'patch', 'delete', 'head', 'options')
+    .valid(
+      Methods.get,
+      Methods.post,
+      Methods.put,
+      Methods.patch,
+      Methods.delete,
+      Methods.head,
+      Methods.options
+    )
     .failover(RouteDefault.method)
     .required(),
   endpoint: Joi.string().allow('').failover(RouteDefault.endpoint).required(),

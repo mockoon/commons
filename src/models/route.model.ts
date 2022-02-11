@@ -35,7 +35,7 @@ export type ResponseRuleTargets =
 export type Route = {
   uuid: string;
   documentation: string;
-  method: Method;
+  method: keyof typeof Methods;
   endpoint: string;
   responses: RouteResponse[];
   enabled: boolean;
@@ -45,11 +45,12 @@ export type Route = {
 
 export type Header = { key: string; value: string };
 
-export type Method =
-  | 'get'
-  | 'post'
-  | 'put'
-  | 'patch'
-  | 'delete'
-  | 'head'
-  | 'options';
+export enum Methods {
+  get = 'get',
+  post = 'post',
+  put = 'put',
+  patch = 'patch',
+  delete = 'delete',
+  head = 'head',
+  options = 'options'
+}
