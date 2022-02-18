@@ -29,7 +29,8 @@ export type Transaction = {
     urlPath: string | null;
     route: string | null;
     params: { name: string; value: string }[];
-    queryParams: { name: string; value: string }[];
+    query: string | null;
+    queryParams: any;
     body: any;
     headers: Header[];
   };
